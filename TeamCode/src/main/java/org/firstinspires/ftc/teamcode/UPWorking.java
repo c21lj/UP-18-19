@@ -50,7 +50,7 @@ import org.firstinspires.ftc.teamcode.HardwareUpChassis;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Up Chassis", group="UpChassis")
+@TeleOp(name="UPWorking", group="UPWorking")
 public class UPWorking extends LinearOpMode {
 
     /* Declare OpMode members. */
@@ -63,12 +63,16 @@ public class UPWorking extends LinearOpMode {
         double frontright;
         double backleft;
         double backright;
+        double scale;
+        double drive_scale;
+        double gamepad1LeftY;
+        double gamepad1LeftX;
+        double gamepad1RightX;
         double left;
         double right;
         double threshold = .3;
-        double drive;
-        double turn;
-        double max;
+        double sidemax;
+        double frontmax;
 
         /* Initialize the hardware variables.
          * The init() method of the hardware class does all the work here
@@ -88,39 +92,61 @@ public class UPWorking extends LinearOpMode {
             // Run wheels in POV mode (note: The joystick goes negative when pushed forwards, so negate it)
             // In this mode the Left stick moves the robot fwd and back, the Right stick turns left and right.
 //            // This way it's also easy to just drive straight, or just turn.
-            drive = -gamepad1.left_stick_y;
-            turn  =  gamepad1.right_stick_x;
+            // Get data from the gamepad and scale it appropriately. The scale is based upon whether the right bumper is pressed.
+            scale = (gamepad1.right_bumper ? .3 : .7);
+            drive_scale = (gamepad1.right_bumper ? .3 : 1);
+            gamepad1LeftY = -gamepad1.left_stick_y * drive_scale;
+            gamepad1LeftX = gamepad1.left_stick_x * drive_scale;
+            gamepad1RightX = gamepad1.right_stick_x * scale;
+
+            // Apply the holonomic formulas to calculate the powers of the motors
+            frontleft = -gamepad1LeftY - gamepad1LeftX - gamepad1RightX;
+            frontright = gamepad1LeftY - gamepad1LeftX - gamepad1RightX;
+            backright = gamepad1LeftY + gamepad1LeftX - gamepad1RightX;
+            backleft = -gamepad1LeftY + gamepad1LeftX - gamepad1RightX;
 //
 //            // Combine drive and turn for blended motion.
-            left  = drive + turn;
-            right = drive - turn;
 //
             // Normalize the values so neither exceed +/- 1.0
-            max = Math.max(Math.abs(left), Math.abs(right));
-            if (max > 1.0)
-            {
-                left /= max;
-                right /= max;
-            }
-            if (left > threshold){
-                robot.frontleft.setPower(left);
-                robot.frontright.setPower(left);
-                robot.backleft.setPower(left);
-                robot.backright.setPower(left);
-            } else {
-                robot.frontleft.setPower(0);
-                robot.frontright.setPower(0);
-                robot.backleft.setPower(0);
-                robot.backright.setPower(0);
-            }
+           // backmax = Math.max(Math.abs(frontleft), Math.abs(gamepad1LeftY), Math.abs(gamepad1RightX));
+           // frontmax = Math.max(Math.abs(frontleft), Math.abs(gamepad1LeftY), Math.abs(gamepad1RightX));
 
-            // Output the safe vales to the motor drives.
-
-            telemetry.addData("right",  "%.2f", right);
-            telemetry.addData("left", "%.2f", left);
-            telemetry.addData("drive",  "%.2f", drive);
-            telemetry.addData("turn",  "%.2f", turn);
-            telemetry.update();
-        }
-    }
-}
+////            if (max > .2) {
+////                frontright /= max;
+////                frontleft /= max;
+////                backright /= max;
+////                backleft /= max;
+//                robot.frontleft.setPower(frontleft);
+//                // clip the right/left values so that the values never exceed +/- 1
+//                frontright = Range.clip(frontright, -1, 1);
+//                frontleft = Range.clip(frontleft, -1, 1);
+//                backleft = Range.clip(backleft, -1, 1);
+//                backright = Range.clip(backright, -1, 1);
+//            } else {
+//                frontright = 0;
+//                frontleft = 0;
+//                backright = 0;
+//                backleft = 0;
+//            }
+//            if (left > threshold){
+//                robot.frontleft.setPower(left);
+//                robot.frontright.setPower(left);
+//                robot.backleft.setPower(left);
+//                robot.backright.setPower(left);
+//            } else {
+//                robot.frontleft.setPower(0);
+//                robot.frontright.setPower(0);
+//                robot.backleft.setPower(0);
+//                robot.backright.setPower(0);
+//            }
+//
+//            // Output the safe vales to the motor drives.
+//
+//            telemetry.addData("right",  "%.2f", right);
+//            telemetry.addData("left", "%.2f", left);
+//            telemetry.addData("drive",  "%.2f", drive);
+//            telemetry.addData("turn",  "%.2f", turn);
+//            telemetry.update();
+//        }
+//    }
+//}
