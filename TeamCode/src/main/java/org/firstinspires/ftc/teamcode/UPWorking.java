@@ -73,6 +73,7 @@ public class UPWorking extends LinearOpMode {
         double threshold = .3;
         double sidemax;
         double frontmax;
+        double backmax;
 
         /* Initialize the hardware variables.
          * The init() method of the hardware class does all the work here
@@ -108,8 +109,8 @@ public class UPWorking extends LinearOpMode {
 //            // Combine drive and turn for blended motion.
 //
             // Normalize the values so neither exceed +/- 1.0
-           // backmax = Math.max(Math.abs(frontleft), Math.abs(gamepad1LeftY), Math.abs(gamepad1RightX));
-           // frontmax = Math.max(Math.abs(frontleft), Math.abs(gamepad1LeftY), Math.abs(gamepad1RightX));
+           backmax = Math.max(Math.abs(frontleft), Math.abs(gamepad1LeftY), Math.abs(gamepad1RightX));
+           frontmax = Math.max(Math.abs(frontleft), Math.abs(gamepad1LeftY), Math.abs(gamepad1RightX));
 
 ////            if (max > .2) {
 ////                frontright /= max;
