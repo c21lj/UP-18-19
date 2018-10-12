@@ -109,8 +109,8 @@ public class UPWorking extends LinearOpMode {
 //            // Combine drive and turn for blended motion.
 //
             // Normalize the values so neither exceed +/- 1.0
-           backmax = Math.max(Math.abs(frontleft), Math.abs(gamepad1LeftY), Math.abs(gamepad1RightX));
-           frontmax = Math.max(Math.abs(frontleft), Math.abs(gamepad1LeftY), Math.abs(gamepad1RightX));
+        //   backmax = Math.max(Math.abs(frontleft), Math.abs(gamepad1LeftY), Math.abs(gamepad1RightX));
+       //    frontmax = Math.max(Math.abs(frontleft), Math.abs(gamepad1LeftY), Math.abs(gamepad1RightX));
 
 ////            if (max > .2) {
 ////                frontright /= max;
@@ -148,6 +148,6 @@ public class UPWorking extends LinearOpMode {
 //            telemetry.addData("drive",  "%.2f", drive);
 //            telemetry.addData("turn",  "%.2f", turn);
 //            telemetry.update();
-//        }
-//    }
-//}
+        }
+    }
+}
