@@ -14,6 +14,8 @@ import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior;
 
 abstract class JackalopeOpMode extends LinearOpMode {
 
+    HardwareUPLauren robot = new HardwareUPLauren();
+
     /**
      * Front-right Servo
      */

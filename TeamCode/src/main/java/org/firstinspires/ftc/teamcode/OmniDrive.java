@@ -31,7 +31,7 @@ public class OmniDrive extends JackalopeOpMode {
     private DcMotor BL = null;
     private ColorSensor CBL;
     private boolean gripped = false;
-    private boolean lifted = false;
+//    private boolean lifted = false;
     private double short_drive_x;
     private boolean modeBool = false;
     private double short_drive_y;
@@ -71,21 +71,21 @@ public class OmniDrive extends JackalopeOpMode {
         FL = hardwareMap.get(DcMotor.class, "FL");
         BR = hardwareMap.get(DcMotor.class, "BR");
         BL = hardwareMap.get(DcMotor.class, "BL");
-        lift = hardwareMap.get(DcMotor.class, "lift");
+//        lift = hardwareMap.get(DcMotor.class, "lift");
 
         // Set the initial directions of the motors
         FL.setDirection(DcMotor.Direction.REVERSE);
         BL.setDirection(DcMotor.Direction.REVERSE);
         BR.setDirection(DcMotor.Direction.REVERSE);
         FR.setDirection(DcMotor.Direction.REVERSE);
-        lift.setDirection(DcMotorSimple.Direction.FORWARD);
+//        lift.setDirection(DcMotorSimple.Direction.FORWARD);
 
         // Set the behaviour when motors' power is set to zero -- whether to brake
         FR.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         FL.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         BR.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         BL.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
-        lift.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
+//        lift.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -98,7 +98,6 @@ public class OmniDrive extends JackalopeOpMode {
 
         // Loop until the op mode is stopped. changes
         while (!isStopRequested() && opModeIsActive()) {
-            telemetry.addData("relicPos", SRelicRotate.getPosition());
             telemetry.addData("read", read);
 
             // left stick controls direction
