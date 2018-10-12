@@ -58,6 +58,8 @@ public class HardwareUPLauren
     public DcMotor  FR   = null;
     public DcMotor  BL   = null;
     public DcMotor  BR  = null;
+    public DcMotor  stringlift = null;
+    public DcMotor  lift = null;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -78,16 +80,24 @@ public class HardwareUPLauren
         FR = hwMap.get(DcMotor.class, "frontright");
         BL  = hwMap.get(DcMotor.class, "backleft");
         BR  = hwMap.get(DcMotor.class, "backright");
+        stringlift  = hwMap.get(DcMotor.class, "stringlift");
+        lift  = hwMap.get(DcMotor.class, "lift");
         FL.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         FR.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
         BL.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         BR.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
+        stringlift.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
+        lift.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
+
 
         // Set all motors to zero power
         FL.setPower(0);
         FR.setPower(0);
         BL.setPower(0);
         BR.setPower(0);
+        stringlift.setPower(0);
+        lift.setPower(0);
+
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
@@ -95,6 +105,9 @@ public class HardwareUPLauren
         FR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        stringlift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
     }
 }
 

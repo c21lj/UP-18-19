@@ -20,15 +20,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 public class OmniDrive extends JackalopeOpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor FR = null;
-    private DcMotor FL = null;
     private Servo SRelicRotate = null;
     private Servo SBlock = null;
 //    private Orientation mode = Orientation.LIFT;
     private Servo SRelicPickup = null;
     private boolean read = false;
-    private DcMotor BR = null;
-    private DcMotor BL = null;
     private ColorSensor CBL;
     private boolean gripped = false;
 //    private boolean lifted = false;
@@ -42,6 +38,8 @@ public class OmniDrive extends JackalopeOpMode {
     double gamepad1LeftY;
     double gamepad1LeftX;
     double gamepad1RightX;
+    boolean rightbumper;
+    boolean leftbumper;
     double frontLeft;
     double frontRight;
     double backRight;
@@ -57,6 +55,9 @@ public class OmniDrive extends JackalopeOpMode {
         FL.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         BR.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         BL.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
+        stringlift.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
+        lift.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
+
     }
 
     /*
@@ -71,21 +72,24 @@ public class OmniDrive extends JackalopeOpMode {
         FL = hardwareMap.get(DcMotor.class, "FL");
         BR = hardwareMap.get(DcMotor.class, "BR");
         BL = hardwareMap.get(DcMotor.class, "BL");
-//        lift = hardwareMap.get(DcMotor.class, "lift");
+        lift = hardwareMap.get(DcMotor.class, "lift");
+        stringlift = hardwareMap.get(DcMotor.class, "stringlift");
 
         // Set the initial directions of the motors
         FL.setDirection(DcMotor.Direction.REVERSE);
         BL.setDirection(DcMotor.Direction.REVERSE);
         BR.setDirection(DcMotor.Direction.REVERSE);
         FR.setDirection(DcMotor.Direction.REVERSE);
-//        lift.setDirection(DcMotorSimple.Direction.FORWARD);
+        stringlift.setDirection(DcMotorSimple.Direction.FORWARD);
+        lift.setDirection(DcMotorSimple.Direction.FORWARD);
 
         // Set the behaviour when motors' power is set to zero -- whether to brake
         FR.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         FL.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         BR.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         BL.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
-//        lift.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
+        stringlift.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
+        lift.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -109,6 +113,8 @@ public class OmniDrive extends JackalopeOpMode {
             gamepad1LeftY = -gamepad1.left_stick_y * drive_scale;
             gamepad1LeftX = gamepad1.left_stick_x * drive_scale;
             gamepad1RightX = gamepad1.right_stick_x * scale;
+            rightbumper = gamepad1.right_bumper;
+            leftbumper = gamepad1.left_bumper;
 
             // Apply the holonomic formulas to calculate the powers of the motors
             frontLeft = -gamepad1LeftY - gamepad1LeftX - gamepad1RightX;
@@ -132,6 +138,17 @@ public class OmniDrive extends JackalopeOpMode {
                 backLeft = 0;
             }
 
+            if (rightbumper) {
+                stringlift.setPower(.4);
+                lift.setPower(.3);
+            } else if (leftbumper) {
+                stringlift.setPower(-.4);
+                lift.setPower(-.3);
+            } else {
+                stringlift.setPower(0);
+                lift.setPower(0);
+            }
+
             // Send the power variables to the driver.
             telemetry.addData("FR", frontRight);
             telemetry.addData("FL", frontLeft);
@@ -153,6 +170,9 @@ public class OmniDrive extends JackalopeOpMode {
         BL.setPower(0);
         FR.setPower(0);
         BR.setPower(0);
+        stringlift.setPower(0);
+        lift.setPower(0);
+
     }
 
 

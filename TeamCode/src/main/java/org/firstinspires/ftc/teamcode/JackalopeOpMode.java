@@ -18,9 +18,9 @@ abstract class JackalopeOpMode extends LinearOpMode {
 
     /**
      * Front-right Servo
-     */
-    DcMotor FR = null;
 
+     */
+DcMotor FR = null;
     /**
      * Front-left Servo
      */
@@ -52,6 +52,7 @@ abstract class JackalopeOpMode extends LinearOpMode {
     Servo SR = null;
 
     DcMotor lift = null;
+    DcMotor stringlift = null;
 
 //    Behaviour when the motors are stopped
 
@@ -61,6 +62,7 @@ abstract class JackalopeOpMode extends LinearOpMode {
         FL.setDirection(strafe ? DcMotor.Direction.FORWARD : DcMotor.Direction.FORWARD);
         BR.setDirection(strafe ? DcMotor.Direction.REVERSE : DcMotor.Direction.REVERSE);
         BL.setDirection(strafe ? DcMotor.Direction.REVERSE : DcMotor.Direction.FORWARD);
+
     }
     public double getAngleDiff(double angle1, double angle2) {
         if(Math.abs(angle1 - angle2) < 180.0)
