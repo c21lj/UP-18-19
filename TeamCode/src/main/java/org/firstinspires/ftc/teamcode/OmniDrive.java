@@ -96,7 +96,7 @@ public class OmniDrive extends JackalopeOpMode {
         // Wait for the start button to be pressed on the phone.
         waitForStart();
 
-        // Loop until the op mode is stopped.
+        // Loop until the op mode is stopped. changes
         while (!isStopRequested() && opModeIsActive()) {
             telemetry.addData("relicPos", SRelicRotate.getPosition());
             telemetry.addData("read", read);
