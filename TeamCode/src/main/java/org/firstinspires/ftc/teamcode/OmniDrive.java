@@ -27,7 +27,7 @@ public class OmniDrive extends JackalopeOpMode {
     private boolean read = false;
     private ColorSensor CBL;
     private boolean gripped = false;
-//    private boolean lifted = false;
+    private boolean lifted = false;
     private double short_drive_x;
     private boolean modeBool = false;
     private double short_drive_y;
