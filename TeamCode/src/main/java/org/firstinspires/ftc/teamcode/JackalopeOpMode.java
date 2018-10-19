@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -37,22 +38,18 @@ DcMotor FR = null;
     DcMotor BL = null;
 
     /**
-     * Jewel Servo
+     * left nom servo
      */
-    Servo JS = null;
+    CRServo leftnom = null;
 
     /**
-     * Left grabber servo
+     * right nom servo
      */
-    Servo SL = null;
+    CRServo rightnom = null;
 
-    /**
-     * Right grabber servo
-     */
-    Servo SR = null;
-
-    DcMotor lift = null;
-    DcMotor stringlift = null;
+    DcMotor shoulder = null;
+    DcMotor elbow = null;
+    DcMotor pullup = null;
 
 //    Behaviour when the motors are stopped
 

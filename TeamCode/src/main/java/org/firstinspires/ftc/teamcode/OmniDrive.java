@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 //UP!!
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -20,10 +21,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 public class OmniDrive extends JackalopeOpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-    private Servo SRelicRotate = null;
-    private Servo SBlock = null;
+    private CRServo leftnom = null;
+    private CRServo rightnom = null;
 //    private Orientation mode = Orientation.LIFT;
-    private Servo SRelicPickup = null;
     private boolean read = false;
     private ColorSensor CBL;
     private boolean gripped = false;
@@ -40,10 +40,18 @@ public class OmniDrive extends JackalopeOpMode {
     double gamepad1RightX;
     boolean rightbumper;
     boolean leftbumper;
+    boolean abutton;
+    boolean bbutton;
+    boolean xbutton;
+    boolean ybutton;
     double frontLeft;
     double frontRight;
     double backRight;
     double backLeft;
+    double righttrigger;
+    double lefttrigger;
+    boolean gamepad2DpadDown;
+    boolean gamepad2DpadUp;
 
     @Override
     public void strafe(boolean strafe) {
@@ -55,8 +63,9 @@ public class OmniDrive extends JackalopeOpMode {
         FL.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         BR.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         BL.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
-        stringlift.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
-        lift.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
+        elbow.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
+        pullup.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
+        shoulder.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
 
     }
 
@@ -72,24 +81,31 @@ public class OmniDrive extends JackalopeOpMode {
         FL = hardwareMap.get(DcMotor.class, "FL");
         BR = hardwareMap.get(DcMotor.class, "BR");
         BL = hardwareMap.get(DcMotor.class, "BL");
-        lift = hardwareMap.get(DcMotor.class, "lift");
-        stringlift = hardwareMap.get(DcMotor.class, "stringlift");
+        shoulder = hardwareMap.get(DcMotor.class, "shoulder");
+        elbow = hardwareMap.get(DcMotor.class, "elbow");
+        pullup = hardwareMap.get(DcMotor.class, "elbow");
+        leftnom = hardwareMap.get(CRServo.class, "leftnom");
+        rightnom = hardwareMap.get(CRServo.class, "leftnom");
 
         // Set the initial directions of the motors
         FL.setDirection(DcMotor.Direction.REVERSE);
         BL.setDirection(DcMotor.Direction.REVERSE);
         BR.setDirection(DcMotor.Direction.REVERSE);
         FR.setDirection(DcMotor.Direction.REVERSE);
-        stringlift.setDirection(DcMotorSimple.Direction.FORWARD);
-        lift.setDirection(DcMotorSimple.Direction.FORWARD);
+        elbow.setDirection(DcMotorSimple.Direction.FORWARD);
+        pullup.setDirection(DcMotorSimple.Direction.FORWARD);
+        shoulder.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftnom.setDirection(CRServo.Direction.FORWARD);
+        rightnom.setDirection(CRServo.Direction.FORWARD);
 
         // Set the behaviour when motors' power is set to zero -- whether to brake
         FR.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         FL.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         BR.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         BL.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
-        stringlift.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
-        lift.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
+        elbow.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
+        pullup.setDirection(DcMotorSimple.Direction.FORWARD);
+        shoulder.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -113,8 +129,16 @@ public class OmniDrive extends JackalopeOpMode {
             gamepad1LeftY = -gamepad1.left_stick_y * drive_scale;
             gamepad1LeftX = gamepad1.left_stick_x * drive_scale;
             gamepad1RightX = gamepad1.right_stick_x * scale;
-            rightbumper = gamepad1.right_bumper;
-            leftbumper = gamepad1.left_bumper;
+            rightbumper = gamepad2.right_bumper;
+            leftbumper = gamepad2.left_bumper;
+            righttrigger = gamepad2.right_trigger;
+            lefttrigger = gamepad2.left_trigger;
+            abutton = gamepad2.a;
+            xbutton = gamepad2.x;
+            bbutton = gamepad2.b;
+            ybutton = gamepad2.y;
+            gamepad2DpadDown = gamepad2.dpad_down;
+            gamepad2DpadUp = gamepad2.dpad_up;
 
             // Apply the holonomic formulas to calculate the powers of the motors
             frontLeft = -gamepad1LeftY - gamepad1LeftX - gamepad1RightX;
@@ -138,15 +162,41 @@ public class OmniDrive extends JackalopeOpMode {
                 backLeft = 0;
             }
 
-            if (rightbumper) {
-                stringlift.setPower(.4);
-                lift.setPower(.3);
-            } else if (leftbumper) {
-                stringlift.setPower(-.4);
-                lift.setPower(-.3);
+            if (gamepad2DpadDown) {
+                shoulder.setPower(1);
+            } else if (gamepad2DpadUp) {
+                shoulder.setPower(-1);
             } else {
-                stringlift.setPower(0);
-                lift.setPower(0);
+                shoulder.setPower(0);
+            }
+
+            if (xbutton) {
+                elbow.setPower(1);
+            } else if (bbutton) {
+                elbow.setPower(-1);
+            } else {
+                elbow.setPower(0);
+            }
+
+            if (rightbumper) {
+                leftnom.setPower(1);
+                rightnom.setPower(1);
+            } else if (leftbumper) {
+                leftnom.setPower(-1);
+                rightnom.setPower(-1);
+            } else {
+                leftnom.setPower(0);
+                rightnom.setPower(0);
+
+            }
+
+
+            if (ybutton) {
+                pullup.setPower(.7);
+            } else if (abutton) {
+                pullup.setPower(-.7);
+            } else {
+                pullup.setPower(0);
             }
 
             // Send the power variables to the driver.
@@ -170,8 +220,9 @@ public class OmniDrive extends JackalopeOpMode {
         BL.setPower(0);
         FR.setPower(0);
         BR.setPower(0);
-        stringlift.setPower(0);
-        lift.setPower(0);
+        elbow.setPower(0);
+        pullup.setPower(0);
+        shoulder.setPower(0);
 
     }
 
