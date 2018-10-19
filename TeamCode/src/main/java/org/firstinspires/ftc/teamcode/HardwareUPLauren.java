@@ -60,6 +60,8 @@ public class HardwareUPLauren
     public DcMotor  BR  = null;
     public DcMotor  stringlift = null;
     public DcMotor  lift = null;
+    public Servo rightnom = null;
+    public Servo leftnom = null;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -82,6 +84,8 @@ public class HardwareUPLauren
         BR  = hwMap.get(DcMotor.class, "backright");
         stringlift  = hwMap.get(DcMotor.class, "stringlift");
         lift  = hwMap.get(DcMotor.class, "lift");
+        rightnom = hwMap.get(Servo.class, "rightnom");
+        leftnom = hwMap.get(Servo.class, "leftnom");
         FL.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         FR.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
         BL.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors

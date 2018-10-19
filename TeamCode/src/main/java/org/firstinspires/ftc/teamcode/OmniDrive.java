@@ -20,10 +20,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 public class OmniDrive extends JackalopeOpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-    private Servo SRelicRotate = null;
     private Servo SBlock = null;
 //    private Orientation mode = Orientation.LIFT;
     private Servo SRelicPickup = null;
+    public Servo rightnom = null;
+    public Servo leftnom = null;
     private boolean read = false;
     private ColorSensor CBL;
     private boolean gripped = false;
@@ -33,6 +34,8 @@ public class OmniDrive extends JackalopeOpMode {
     private double short_drive_y;
     private ElapsedTime clock = new ElapsedTime();
     private double startTime = 0.0;
+    final double    CLAW_SPEED      = 0.02 ;                   // sets rate to move servo
+    double          clawOffset      = 0;                       // Servo mid position
     double scale;
     double drive_scale;
     double gamepad1LeftY;
@@ -40,6 +43,8 @@ public class OmniDrive extends JackalopeOpMode {
     double gamepad1RightX;
     boolean rightbumper;
     boolean leftbumper;
+    boolean dpadup;
+    boolean dpaddown;
     double frontLeft;
     double frontRight;
     double backRight;
@@ -57,6 +62,8 @@ public class OmniDrive extends JackalopeOpMode {
         BL.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         stringlift.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         lift.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
+
+
 
     }
 
@@ -115,6 +122,8 @@ public class OmniDrive extends JackalopeOpMode {
             gamepad1RightX = gamepad1.right_stick_x * scale;
             rightbumper = gamepad1.right_bumper;
             leftbumper = gamepad1.left_bumper;
+            dpadup = gamepad1.dpad_up;
+            dpaddown = gamepad1.dpad_down;
 
             // Apply the holonomic formulas to calculate the powers of the motors
             frontLeft = -gamepad1LeftY - gamepad1LeftX - gamepad1RightX;
@@ -149,11 +158,30 @@ public class OmniDrive extends JackalopeOpMode {
                 lift.setPower(0);
             }
 
+            //move nom
+            if (dpadup) {
+                clawOffset += CLAW_SPEED;
+
+            } else if (dpaddown) {
+                clawOffset -= CLAW_SPEED;
+
+            } else {
+                rightnom.setPosition(0);
+                lift.setPower(0);
+            }
+
+            // Move both servos to new position.  Assume servos are mirror image of each other.
+            clawOffset = Range.clip(clawOffset, -0.5, 0.5);
+            robot.rightnom.setPosition(.5 + clawOffset);
+            robot.leftnom.setPosition(.5 - clawOffset);
+
             // Send the power variables to the driver.
             telemetry.addData("FR", frontRight);
             telemetry.addData("FL", frontLeft);
             telemetry.addData("BR", backRight);
             telemetry.addData("BL", backLeft);
+            telemetry.addData("claw",  "Offset = %.2f", clawOffset);
+
 
             // Set the powers of the motors to the power variables.
             FR.setPower(frontRight);
