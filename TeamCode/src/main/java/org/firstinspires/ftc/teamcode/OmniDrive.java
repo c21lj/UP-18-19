@@ -179,11 +179,11 @@ public class OmniDrive extends JackalopeOpMode {
             }
 
             if (rightbumper) {
-                leftnom.setPower(1);
-                rightnom.setPower(1);
+                leftnom.setPower(.8);
+                rightnom.setPower(.8);
             } else if (leftbumper) {
-                leftnom.setPower(-1);
-                rightnom.setPower(-1);
+                leftnom.setPower(-.8);
+                rightnom.setPower(-.8);
             } else {
                 leftnom.setPower(0);
                 rightnom.setPower(0);
