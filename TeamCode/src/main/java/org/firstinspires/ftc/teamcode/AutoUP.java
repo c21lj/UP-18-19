@@ -170,22 +170,20 @@ public class AutoUP extends JackalopeOpMode {
         telemetry.addData("BL", backLeft);
 
         // Set the powers of the motors to the power variables.
-        FR.setPower(frontRight);
-        FL.setPower(frontLeft);
-        BR.setPower(backRight);
-        BL.setPower(backLeft);
         // Update the displayed values on the driver phone.
         telemetry.update();
         idle();
 
         // When the op mode is told to stop, stop the motors.
-        FL.setPower(0);
-        BL.setPower(0);
-        FR.setPower(0);
-        BR.setPower(0);
-        elbow.setPower(0);
-        pullup.setPower(0);
-        shoulder.setPower(0);
+        while(isStopRequested()){
+            FL.setPower(0);
+            BL.setPower(0);
+            FR.setPower(0);
+            BR.setPower(0);
+            elbow.setPower(0);
+            pullup.setPower(0);
+            shoulder.setPower(0);
+        }
 
     }
 
