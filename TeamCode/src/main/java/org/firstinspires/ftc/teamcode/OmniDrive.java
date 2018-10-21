@@ -191,9 +191,9 @@ public class OmniDrive extends JackalopeOpMode {
             }
 
 
-            if (ybutton) {
+            if (abutton) {
                 pullup.setPower(.7);
-            } else if (abutton) {
+            } else if (ybutton) {
                 pullup.setPower(-.7);
             } else {
                 pullup.setPower(0);
