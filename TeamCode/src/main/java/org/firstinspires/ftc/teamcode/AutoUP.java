@@ -82,7 +82,7 @@ public class AutoUP extends JackalopeOpMode {
         BL = hardwareMap.get(DcMotor.class, "BL");
         shoulder = hardwareMap.get(DcMotor.class, "shoulder");
         elbow = hardwareMap.get(DcMotor.class, "elbow");
-        pullup = hardwareMap.get(DcMotor.class, "elbow");
+        pullup = hardwareMap.get(DcMotor.class, "pullup");
         leftnom = hardwareMap.get(CRServo.class, "leftnom");
         rightnom = hardwareMap.get(CRServo.class, "rightnom");
 
@@ -119,7 +119,7 @@ public class AutoUP extends JackalopeOpMode {
             // Loop until the op mode is stopped. changes
             telemetry.addData("read", read);
 
-            pullup.setPower(.7);//pullup up?
+            pullup.setPower(-.7);//pullup down
             delay(3000);
             pullup.setPower(0);//pullup up?
 
