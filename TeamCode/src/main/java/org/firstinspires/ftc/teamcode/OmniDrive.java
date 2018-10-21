@@ -16,7 +16,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-@TeleOp(name = "JackalopeOmniDrive")
+@TeleOp(name = "JackalopeOmniDrive_New")
 
 public class OmniDrive extends JackalopeOpMode {
     // Declare OpMode members.
@@ -163,17 +163,17 @@ public class OmniDrive extends JackalopeOpMode {
             }
 
             if (gamepad2DpadDown) {
-                shoulder.setPower(1);
+                shoulder.setPower(.5);
             } else if (gamepad2DpadUp) {
-                shoulder.setPower(-1);
+                shoulder.setPower(-.5);
             } else {
                 shoulder.setPower(0);
             }
 
             if (xbutton) {
-                elbow.setPower(1);
+                elbow.setPower(.6);
             } else if (bbutton) {
-                elbow.setPower(-1);
+                elbow.setPower(-.6);
             } else {
                 elbow.setPower(0);
             }
