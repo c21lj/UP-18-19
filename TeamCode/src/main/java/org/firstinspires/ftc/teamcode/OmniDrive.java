@@ -96,7 +96,7 @@ public class OmniDrive extends JackalopeOpMode {
         pullup.setDirection(DcMotorSimple.Direction.FORWARD);
         shoulder.setDirection(DcMotorSimple.Direction.FORWARD);
         leftnom.setDirection(CRServo.Direction.FORWARD);
-        rightnom.setDirection(CRServo.Direction.FORWARD);
+        rightnom.setDirection(CRServo.Direction.REVERSE);
 
         // Set the behaviour when motors' power is set to zero -- whether to brake
         FR.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
