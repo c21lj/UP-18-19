@@ -83,7 +83,7 @@ public class OmniDrive extends JackalopeOpMode {
         BL = hardwareMap.get(DcMotor.class, "BL");
         shoulder = hardwareMap.get(DcMotor.class, "shoulder");
         elbow = hardwareMap.get(DcMotor.class, "elbow");
-        pullup = hardwareMap.get(DcMotor.class, "elbow");
+        pullup = hardwareMap.get(DcMotor.class, "pullup");
         leftnom = hardwareMap.get(CRServo.class, "leftnom");
         rightnom = hardwareMap.get(CRServo.class, "leftnom");
 
