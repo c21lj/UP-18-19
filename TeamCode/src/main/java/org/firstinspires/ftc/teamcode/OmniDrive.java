@@ -85,7 +85,7 @@ public class OmniDrive extends JackalopeOpMode {
         elbow = hardwareMap.get(DcMotor.class, "elbow");
         pullup = hardwareMap.get(DcMotor.class, "pullup");
         leftnom = hardwareMap.get(CRServo.class, "leftnom");
-        rightnom = hardwareMap.get(CRServo.class, "leftnom");
+        rightnom = hardwareMap.get(CRServo.class, "rightnom");
 
         // Set the initial directions of the motors
         FL.setDirection(DcMotor.Direction.REVERSE);
