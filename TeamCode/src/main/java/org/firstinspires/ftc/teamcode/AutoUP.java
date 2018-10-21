@@ -124,31 +124,39 @@ public class AutoUP extends JackalopeOpMode {
             pullup.setPower(0);//pullup up?
 
 
-            strafe(true);
-            delay(1000);
-            strafe(false);
+//            strafe(true);
+//            delay(1000);
+//            strafe(false);
+//
+//            goForward();
+//            delay(2500);
+//
+//            goStop();
+//            delay(500);
+//
+//            turnLeft();
+//            delay(1500);
+//            goStop();
+//
+//            elbow.setPower(.5);//elbow up?
+//            shoulder.setPower(-.5);//shoulder up
+//            delay(750);
+//            elbow.setPower(0);
+//            shoulder.setPower(0);
+//
+//            leftnom.setPower(-1);//spit out
+//            rightnom.setPower(-1);//spit out
+//            delay(2000);
+//            leftnom.setPower(0);
+//            rightnom.setPower(0);
 
-            goForward();
-            delay(2500);
 
-            goStop();
-            delay(500);
 
-            turnLeft();
-            delay(1500);
-            goStop();
 
-            elbow.setPower(.5);//elbow up?
-            shoulder.setPower(-.5);//shoulder up
-            delay(750);
-            elbow.setPower(0);
-            shoulder.setPower(0);
 
-            leftnom.setPower(-1);//spit out
-            rightnom.setPower(-1);//spit out
-            delay(2000);
-            leftnom.setPower(0);
-            rightnom.setPower(0);
+
+
+
 
 //                frontRight = 0;
 //                frontLeft = 0;
