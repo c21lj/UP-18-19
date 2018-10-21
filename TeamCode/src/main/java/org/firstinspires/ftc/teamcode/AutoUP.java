@@ -114,32 +114,41 @@ public class AutoUP extends JackalopeOpMode {
 
         // Wait for the start button to be pressed on the phone.
         waitForStart();
+        while (opModeIsActive() && !isStopRequested()) {
 
-        // Loop until the op mode is stopped. changes
-        telemetry.addData("read", read);
+            // Loop until the op mode is stopped. changes
+            telemetry.addData("read", read);
 
-        pullup.setPower(.7);//pullup up?
-        delay(3000);
-        pullup.setPower(0);//pullup up?
-        strafe(true);
-        delay(1000);
-        strafe(false);
-        goForward();
-        delay(2500);
-        turnLeft();
-        delay(1500);
-        goStop();
-        elbow.setPower(.5);//elbow up?
-        shoulder.setPower(-.5);//shoulder up
-        delay(750);
-        elbow.setPower(0);
-        shoulder.setPower(0);
-        leftnom.setPower(-1);//spit out
-        rightnom.setPower(-1);//spit out
-        delay(2000);
-        leftnom.setPower(0);
-        rightnom.setPower(0);
+            pullup.setPower(.7);//pullup up?
+            delay(3000);
+            pullup.setPower(0);//pullup up?
 
+
+            strafe(true);
+            delay(1000);
+            strafe(false);
+
+            goForward();
+            delay(2500);
+
+            goStop();
+            delay(500);
+
+            turnLeft();
+            delay(1500);
+            goStop();
+
+            elbow.setPower(.5);//elbow up?
+            shoulder.setPower(-.5);//shoulder up
+            delay(750);
+            elbow.setPower(0);
+            shoulder.setPower(0);
+
+            leftnom.setPower(-1);//spit out
+            rightnom.setPower(-1);//spit out
+            delay(2000);
+            leftnom.setPower(0);
+            rightnom.setPower(0);
 
 //                frontRight = 0;
 //                frontLeft = 0;
@@ -173,7 +182,7 @@ public class AutoUP extends JackalopeOpMode {
         // Update the displayed values on the driver phone.
         telemetry.update();
         idle();
-
+    }
         // When the op mode is told to stop, stop the motors.
         while(isStopRequested()){
             FL.setPower(0);
