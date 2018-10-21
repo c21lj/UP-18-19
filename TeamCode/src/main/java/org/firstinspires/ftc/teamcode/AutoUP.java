@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 //UP!!
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -16,7 +17,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-@TeleOp(name = "JackalopeOmniDrive")
+@Autonomous(name = "JackalopeAuto")
 
 public class AutoUP extends JackalopeOpMode {
     // Declare OpMode members.
@@ -35,23 +36,23 @@ public class AutoUP extends JackalopeOpMode {
     private double startTime = 0.0;
     double scale;
     double drive_scale;
-    double gamepad1LeftY;
-    double gamepad1LeftX;
-    double gamepad1RightX;
-    boolean rightbumper;
-    boolean leftbumper;
-    boolean abutton;
-    boolean bbutton;
-    boolean xbutton;
+    //    double gamepad1LeftY;
+//    double gamepad1LeftX;
+//    double gamepad1RightX;
+//    boolean rightbumper;
+//    boolean leftbumper;
+//    boolean abutton;
+//    boolean bbutton;
+//    boolean xbutton;
     boolean ybutton;
     double frontLeft;
     double frontRight;
     double backRight;
     double backLeft;
-    double righttrigger;
-    double lefttrigger;
-    boolean gamepad2DpadDown;
-    boolean gamepad2DpadUp;
+//    double righttrigger;
+//    double lefttrigger;
+//    boolean gamepad2DpadDown;
+//    boolean gamepad2DpadUp;
 
     @Override
     public void strafe(boolean strafe) {
@@ -115,103 +116,67 @@ public class AutoUP extends JackalopeOpMode {
         waitForStart();
 
         // Loop until the op mode is stopped. changes
-        while (!isStopRequested() && opModeIsActive()) {
-            telemetry.addData("read", read);
+        telemetry.addData("read", read);
 
-            // left stick controls direction
-            // right stick X controls rotation
-
-            // Get data from the gamepad and scale it appropriately. The scale is based upon whether the right bumper is pressed.
-            scale = (gamepad1.right_bumper ? .3 : .7);
-            drive_scale = (gamepad1.right_bumper ? .3 : 1);
-            gamepad1LeftY = -gamepad1.left_stick_y * drive_scale;
-            gamepad1LeftX = gamepad1.left_stick_x * drive_scale;
-            gamepad1RightX = gamepad1.right_stick_x * scale;
-            rightbumper = gamepad2.right_bumper;
-            leftbumper = gamepad2.left_bumper;
-            righttrigger = gamepad2.right_trigger;
-            lefttrigger = gamepad2.left_trigger;
-            abutton = gamepad2.a;
-            xbutton = gamepad2.x;
-            bbutton = gamepad2.b;
-            ybutton = gamepad2.y;
-            gamepad2DpadDown = gamepad2.dpad_down;
-            gamepad2DpadUp = gamepad2.dpad_up;
-
-            // Apply the holonomic formulas to calculate the powers of the motors
-            frontLeft = -gamepad1LeftY - gamepad1LeftX - gamepad1RightX;
-            frontRight = gamepad1LeftY - gamepad1LeftX - gamepad1RightX;
-            backRight = gamepad1LeftY + gamepad1LeftX - gamepad1RightX;
-            backLeft = -gamepad1LeftY + gamepad1LeftX - gamepad1RightX;
-
-            // If the joystick values are past the threshold, set the power variables to the clipped calculated power.
-            // Otherwise, set them to zero.
-            if (Math.abs(gamepad1LeftX) > .2 || Math.abs(gamepad1LeftY) > .2 || Math.abs(gamepad1RightX) > .2) {
-
-                // clip the right/left values so that the values never exceed +/- 1
-                frontRight = Range.clip(frontRight, -1, 1);
-                frontLeft = Range.clip(frontLeft, -1, 1);
-                backLeft = Range.clip(backLeft, -1, 1);
-                backRight = Range.clip(backRight, -1, 1);
-            } else {
-                frontRight = 0;
-                frontLeft = 0;
-                backRight = 0;
-                backLeft = 0;
-            }
-
-            if (gamepad2DpadDown) {
-                shoulder.setPower(1);
-            } else if (gamepad2DpadUp) {
-                shoulder.setPower(-1);
-            } else {
-                shoulder.setPower(0);
-            }
-
-            if (xbutton) {
-                elbow.setPower(1);
-            } else if (bbutton) {
-                elbow.setPower(-1);
-            } else {
-                elbow.setPower(0);
-            }
-
-            if (rightbumper) {
-                leftnom.setPower(1);
-                rightnom.setPower(1);
-            } else if (leftbumper) {
-                leftnom.setPower(-1);
-                rightnom.setPower(-1);
-            } else {
-                leftnom.setPower(0);
-                rightnom.setPower(0);
-
-            }
+        pullup.setPower(.7);//pullup up?
+        delay(3000);
+        pullup.setPower(0);//pullup up?
+        strafe(true);
+        delay(1000);
+        strafe(false);
+        goForward();
+        delay(2500);
+        turnLeft();
+        delay(1500);
+        goStop();
+        elbow.setPower(.5);//elbow up?
+        shoulder.setPower(-.5);//shoulder up
+        delay(750);
+        elbow.setPower(0);
+        shoulder.setPower(0);
+        leftnom.setPower(-1);//spit out
+        rightnom.setPower(-1);//spit out
+        delay(2000);
+        leftnom.setPower(0);
+        rightnom.setPower(0);
 
 
-            if (ybutton) {
-                pullup.setPower(.7);
-            } else if (abutton) {
-                pullup.setPower(-.7);
-            } else {
-                pullup.setPower(0);
-            }
+//                frontRight = 0;
+//                frontLeft = 0;
+//                backRight = 0;
+//                backLeft = 0;
+//
+//                shoulder.setPower(.5);//shoulder down
+//
+//                shoulder.setPower(-1);//shoulder up
+//
+//                elbow.setPower(.5);//elbow up?
+//
+//                elbow.setPower(-1);//elbow down?
+//
+//                leftnom.setPower(1);//take in
+//                rightnom.setPower(1);//take in
+//
+//                leftnom.setPower(-1);//spit out
+//                rightnom.setPower(-1);//spit out
+//
+//                pullup.setPower(.7);//pullup up?
+//                pullup.setPower(-.7);//pullup down?
 
-            // Send the power variables to the driver.
-            telemetry.addData("FR", frontRight);
-            telemetry.addData("FL", frontLeft);
-            telemetry.addData("BR", backRight);
-            telemetry.addData("BL", backLeft);
+        // Send the power variables to the driver.
+        telemetry.addData("FR", frontRight);
+        telemetry.addData("FL", frontLeft);
+        telemetry.addData("BR", backRight);
+        telemetry.addData("BL", backLeft);
 
-            // Set the powers of the motors to the power variables.
-            FR.setPower(frontRight);
-            FL.setPower(frontLeft);
-            BR.setPower(backRight);
-            BL.setPower(backLeft);
-            // Update the displayed values on the driver phone.
-            telemetry.update();
-            idle();
-        }
+        // Set the powers of the motors to the power variables.
+        FR.setPower(frontRight);
+        FL.setPower(frontLeft);
+        BR.setPower(backRight);
+        BL.setPower(backLeft);
+        // Update the displayed values on the driver phone.
+        telemetry.update();
+        idle();
 
         // When the op mode is told to stop, stop the motors.
         FL.setPower(0);
@@ -225,11 +190,12 @@ public class AutoUP extends JackalopeOpMode {
     }
 
 
-
     /*
      * Scales a value to the appropriate range--used for calculating motor powers/servo positions.
      * For instance, you could use this to map 5 in the range (0,10) to 0.25 in the range (0,0.5)
      */
+
+
     public double map(double x, double in_min, double in_max, double out_min, double out_max) {
         return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
     }

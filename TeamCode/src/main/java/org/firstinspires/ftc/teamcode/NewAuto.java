@@ -7,25 +7,21 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
-
-
 
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 
 import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior;
 
-abstract class JackalopeOpMode extends LinearOpMode {
+abstract class NewAuto extends LinearOpMode {//extends AbstractAutonomous
 
     HardwareUPLauren robot = new HardwareUPLauren();
-    ElapsedTime clock = new ElapsedTime();
 
     /**
      * Front-right Servo
 
      */
-DcMotor FR = null;
+    DcMotor FR = null;
     /**
      * Front-left Servo
      */
@@ -78,44 +74,6 @@ DcMotor FR = null;
             angle2 -= 360;
             return Math.abs(angle1-angle2);
         }
-    }
-    public void delay(int time){
-        double startTime = clock.milliseconds();
-        while(clock.milliseconds() - startTime < time){
-
-        }
-    }
-    public void turnRight(){
-        FL.setPower(.7);
-        BL.setPower(.7);
-        FR.setPower(.7);
-        BR.setPower(.7);
-    }
-    public void turnLeft(){
-        FL.setPower(-.7);
-        BL.setPower(-.7);
-        FR.setPower(-.7);
-        BR.setPower(-.7);
-
-    }
-    public void goForward(){
-        FL.setPower(.7);
-        BL.setPower(.7);
-        FR.setPower(-.7);
-        BR.setPower(-.7);
-
-    }
-    public void goBack(){
-        FL.setPower(-.7);
-        BL.setPower(-.7);
-        FR.setPower(.7);
-        BR.setPower(.7);
-    }
-    public void goStop(){
-        FL.setPower(0);
-        BL.setPower(0);
-        FR.setPower(0);
-        BR.setPower(0);
     }
 }
 
