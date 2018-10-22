@@ -81,7 +81,7 @@ DcMotor FR = null;
     }
     public void delay(int time){
         double startTime = clock.milliseconds();
-        while((clock.milliseconds() - startTime < time) && isStopRequested()){
+        while((clock.milliseconds() - startTime < time) && !isStopRequested()){
 
         }
     }

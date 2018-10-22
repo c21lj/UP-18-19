@@ -162,9 +162,9 @@ public class OmniDrive extends JackalopeOpMode {
                 backLeft = 0;
             }
 
-            if (gamepad2DpadDown) {
+            if (gamepad2DpadUp) {
                 shoulder.setPower(.5);
-            } else if (gamepad2DpadUp) {
+            } else if (gamepad2DpadDown) {
                 shoulder.setPower(-.5);
             } else {
                 shoulder.setPower(0);

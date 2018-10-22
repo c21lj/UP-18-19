@@ -69,6 +69,13 @@ public class AutoUP extends JackalopeOpMode {
         shoulder.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
     }
 
+
+    public void delay(int time){
+        double startTime = clock.milliseconds();
+        while((clock.milliseconds() - startTime < time) && !isStopRequested()){
+
+        }
+    }
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -109,6 +116,7 @@ public class AutoUP extends JackalopeOpMode {
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
 
+
         // Reset the timer to zero.
         runtime.reset();
 
@@ -119,9 +127,15 @@ public class AutoUP extends JackalopeOpMode {
             // Loop until the op mode is stopped. changes
             telemetry.addData("read", read);
 
+
+//            delay(25000);
             pullup.setPower(-.7);//pullup down
-            delay(3000);
+            telemetry.addData("power", pullup.getPower());
+            telemetry.update();
+            delay(2000);
             pullup.setPower(0);//pullup up?
+            telemetry.addData("power", pullup.getPower());
+            telemetry.update();
 
 
 //            strafe(true);
