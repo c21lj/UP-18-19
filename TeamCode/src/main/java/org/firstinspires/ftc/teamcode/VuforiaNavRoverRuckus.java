@@ -305,6 +305,11 @@ public class VuforiaNavRoverRuckus extends LinearOpMode {
                 telemetry.addData("Visible Target", "none");
             }
             telemetry.update();
+
+            /*
+            Vuforia could probably be used to find the gold as well in auto but that would require making the data for the vumark
+            which is pretty much a giant no
+             */
         }
     }
 }

@@ -57,6 +57,10 @@ public class PixyCam extends LinearOpMode {
                 telemetry.addData("Byte 12", pixy.read8(12));
                 telemetry.addData("Byte 13", pixy.read8(13));
                 telemetry.update();
+
+                /*
+                Yeah I actually have no idea where to go from here but it should at least be able to get data to the phone
+                 */
             }
         }
     }
