@@ -119,6 +119,7 @@ public class AutoUP extends JackalopeOpMode {
 
         // Reset the timer to zero.
         runtime.reset();
+        //UP!
 
         // Wait for the start button to be pressed on the phone.
         waitForStart();
