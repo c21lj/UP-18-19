@@ -51,7 +51,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Servo channel:  Servo to open left claw:  "left_hand"
  * Servo channel:  Servo to open right claw: "right_hand"
  */
-public class HardwareUpChassis //hello it's lucas
+public class HardwareUpChassis
 {
     /* Public OpMode members. */
     public DcMotor  frontleft   = null;
