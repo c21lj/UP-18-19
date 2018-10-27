@@ -119,7 +119,6 @@ public class AutoUP extends JackalopeOpMode {
 
         // Reset the timer to zero.
         runtime.reset();
-        //UP!
 
         // Wait for the start button to be pressed on the phone.
         waitForStart();
@@ -134,7 +133,7 @@ public class AutoUP extends JackalopeOpMode {
             telemetry.addData("power", pullup.getPower());
             telemetry.update();
             delay(2000);
-            pullup.setPower(0);//pullup up?
+            pullup.setPower(0);//pullup up
             telemetry.addData("power", pullup.getPower());
             telemetry.update();
 

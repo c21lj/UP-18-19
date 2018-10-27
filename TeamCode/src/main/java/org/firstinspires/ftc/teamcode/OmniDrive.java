@@ -148,47 +148,50 @@ public class OmniDrive extends JackalopeOpMode {
 
             // If the joystick values are past the threshold, set the power variables to the clipped calculated power.
             // Otherwise, set them to zero.
-            if (Math.abs(gamepad1LeftX) > .2 || Math.abs(gamepad1LeftY) > .2 || Math.abs(gamepad1RightX) > .2) {
 
-                // clip the right/left values so that the values never exceed +/- 1
-                frontRight = Range.clip(frontRight, -1, 1);
-                frontLeft = Range.clip(frontLeft, -1, 1);
-                backLeft = Range.clip(backLeft, -1, 1);
-                backRight = Range.clip(backRight, -1, 1);
-            } else {
-                frontRight = 0;
-                frontLeft = 0;
-                backRight = 0;
-                backLeft = 0;
-            }
 
-            if (gamepad2DpadUp) {
-                shoulder.setPower(.5);
-            } else if (gamepad2DpadDown) {
-                shoulder.setPower(-.5);
-            } else {
-                shoulder.setPower(0);
-            }
 
-            if (xbutton) {
-                elbow.setPower(.6);
-            } else if (bbutton) {
-                elbow.setPower(-.6);
-            } else {
-                elbow.setPower(0);
-            }
+//            if (Math.abs(gamepad1LeftX) > .2 || Math.abs(gamepad1LeftY) > .2 || Math.abs(gamepad1RightX) > .2) {
+//
+//                // clip the right/left values so that the values never exceed +/- 1
+//                frontRight = Range.clip(frontRight, -1, 1);
+//                frontLeft = Range.clip(frontLeft, -1, 1);
+//                backLeft = Range.clip(backLeft, -1, 1);
+//                backRight = Range.clip(backRight, -1, 1);
+//            } else {
+//                frontRight = 0;
+//                frontLeft = 0;
+//                backRight = 0;
+//                backLeft = 0;
+//            }
 
-            if (rightbumper) {
-                leftnom.setPower(.8);
-                rightnom.setPower(.8);
-            } else if (leftbumper) {
-                leftnom.setPower(-.8);
-                rightnom.setPower(-.8);
-            } else {
-                leftnom.setPower(0);
-                rightnom.setPower(0);
+//            if (gamepad2DpadUp) {
+//                shoulder.setPower(.5);
+//            } else if (gamepad2DpadDown) {
+//                shoulder.setPower(-.5);
+//            } else {
+//                shoulder.setPower(0);
+//            }
+//
+//            if (xbutton) {
+//                elbow.setPower(.6);
+//            } else if (bbutton) {
+//                elbow.setPower(-.6);
+//            } else {
+//                elbow.setPower(0);
+//            }
 
-            }
+//            if (rightbumper) {
+//                leftnom.setPower(.8);
+//                rightnom.setPower(.8);
+//            } else if (leftbumper) {
+//                leftnom.setPower(-.8);
+//                rightnom.setPower(-.8);
+//            } else {
+//                leftnom.setPower(0);
+//                rightnom.setPower(0);
+//
+//            }
 
 
             if (abutton) {
