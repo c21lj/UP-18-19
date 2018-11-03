@@ -16,7 +16,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 
 import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior;
 
-abstract class JackalopeOpMode extends LinearOpMode {
+abstract class JackalopeAutoMode extends LinearOpMode {
 
     HardwareUPLauren robot = new HardwareUPLauren();
     ElapsedTime clock = new ElapsedTime();
@@ -25,7 +25,7 @@ abstract class JackalopeOpMode extends LinearOpMode {
      * Front-right Servo
 
      */
-DcMotor FR = null;
+    DcMotor FR = null;
     /**
      * Front-left Servo
      */
@@ -87,30 +87,47 @@ DcMotor FR = null;
         }
     }
     public void turnRight(){
-        FL.setPower(.3);
-        BL.setPower(.3);
-        FR.setPower(.3);
-        BR.setPower(.3);
+        FL.setPower(.15);
+        BL.setPower(.15);
+        FR.setPower(.15);
+        BR.setPower(.15);
     }
     public void turnLeft(){
-        FL.setPower(-.3);
-        BL.setPower(-.3);
-        FR.setPower(-.3);
-        BR.setPower(-.3);
+        FL.setPower(-.15);
+        BL.setPower(-.15);
+        FR.setPower(-.15);
+        BR.setPower(-.15);
 
     }
     public void goForward(){
-        FL.setPower(.4);
-        BL.setPower(.3);
-        FR.setPower(-.3);
-        BR.setPower(-.3);
+        FL.setPower(.15);
+        BL.setPower(.15);
+        FR.setPower(-.15);
+        BR.setPower(-.15);
 
     }
+
+    public void goRight(){
+        FL.setPower(-.15);
+        BL.setPower(.15);
+        FR.setPower(-.15);
+        BR.setPower(.15);
+
+    }
+
+    public void goLeft(){
+        FL.setPower(.15);
+        BL.setPower(-.15);
+        FR.setPower(.15);
+        BR.setPower(-.15);
+
+    }
+
     public void goBack(){
-        FL.setPower(-.3);
-        BL.setPower(-.3);
-        FR.setPower(.3);
-        BR.setPower(.3);
+        FL.setPower(-.15);
+        BL.setPower(-.15);
+        FR.setPower(.15);
+        BR.setPower(.15);
     }
     public void goStop(){
         FL.setPower(0);

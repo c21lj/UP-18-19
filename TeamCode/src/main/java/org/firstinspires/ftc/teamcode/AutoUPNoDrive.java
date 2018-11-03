@@ -17,12 +17,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-@Autonomous(name = "JackalopeAutoWithDriving")
+@Autonomous(name = "JackalopeAutoNoDrive")
 
-public class AutoUP extends JackalopeAutoMode {
+public class AutoUPNoDrive extends JackalopeAutoMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-//    private CRServo leftnom = null;
+    //    private CRServo leftnom = null;
 //    private CRServo rightnom = null;
     private Servo flipper = null;
     private boolean read = false;
@@ -119,7 +119,6 @@ public class AutoUP extends JackalopeAutoMode {
 
             // Loop until the op mode is stopped. changes
             telemetry.addData("read", read);
-            flipper.setPosition(.9);
 
 //            delay(25000);
             pullup.setPower(.7);//pullup down
@@ -129,12 +128,6 @@ public class AutoUP extends JackalopeAutoMode {
             pullup.setPower(0);//pullup up?
             telemetry.addData("power", pullup.getPower());
             telemetry.update();
-            goLeft();
-            delay(4000);
-            goStop();
-            flipper.setPosition(0);
-//            delay(2000);
-//            flipper.setPosition(.2);
             delay(200000);
 
 
@@ -193,17 +186,17 @@ public class AutoUP extends JackalopeAutoMode {
 //                pullup.setPower(.7);//pullup up?
 //                pullup.setPower(-.7);//pullup down?
 
-        // Send the power variables to the driver.
-        telemetry.addData("FR", frontRight);
-        telemetry.addData("FL", frontLeft);
-        telemetry.addData("BR", backRight);
-        telemetry.addData("BL", backLeft);
+            // Send the power variables to the driver.
+            telemetry.addData("FR", frontRight);
+            telemetry.addData("FL", frontLeft);
+            telemetry.addData("BR", backRight);
+            telemetry.addData("BL", backLeft);
 
-        // Set the powers of the motors to the power variables.
-        // Update the displayed values on the driver phone.
-        telemetry.update();
-        idle();
-    }
+            // Set the powers of the motors to the power variables.
+            // Update the displayed values on the driver phone.
+            telemetry.update();
+            idle();
+        }
         // When the op mode is told to stop, stop the motors.
         while(isStopRequested()){
             FL.setPower(0);

@@ -16,14 +16,13 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-@TeleOp(name = "JackalopeOmniDrive_New")
+@TeleOp(name = "JackalopeOmniDrive")
 
 public class OmniDrive extends JackalopeOpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-    private CRServo leftnom = null;
-    private CRServo rightnom = null;
-//    private Orientation mode = Orientation.LIFT;
+//    private CRServo leftnom = null;
+//    private CRServo rightnom = null;
     private boolean read = false;
     private ColorSensor CBL;
     private boolean gripped = false;
@@ -63,9 +62,7 @@ public class OmniDrive extends JackalopeOpMode {
         FL.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         BR.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         BL.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
-        elbow.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         pullup.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
-        shoulder.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
 
     }
 
@@ -81,31 +78,25 @@ public class OmniDrive extends JackalopeOpMode {
         FL = hardwareMap.get(DcMotor.class, "FL");
         BR = hardwareMap.get(DcMotor.class, "BR");
         BL = hardwareMap.get(DcMotor.class, "BL");
-        shoulder = hardwareMap.get(DcMotor.class, "shoulder");
-        elbow = hardwareMap.get(DcMotor.class, "elbow");
         pullup = hardwareMap.get(DcMotor.class, "pullup");
-        leftnom = hardwareMap.get(CRServo.class, "leftnom");
-        rightnom = hardwareMap.get(CRServo.class, "rightnom");
+//        leftnom = hardwareMap.get(CRServo.class, "leftnom");
+//        rightnom = hardwareMap.get(CRServo.class, "rightnom");
 
         // Set the initial directions of the motors
         FL.setDirection(DcMotor.Direction.REVERSE);
         BL.setDirection(DcMotor.Direction.REVERSE);
         BR.setDirection(DcMotor.Direction.REVERSE);
         FR.setDirection(DcMotor.Direction.REVERSE);
-        elbow.setDirection(DcMotorSimple.Direction.FORWARD);
         pullup.setDirection(DcMotorSimple.Direction.FORWARD);
-        shoulder.setDirection(DcMotorSimple.Direction.FORWARD);
-        leftnom.setDirection(CRServo.Direction.FORWARD);
-        rightnom.setDirection(CRServo.Direction.REVERSE);
+//        leftnom.setDirection(CRServo.Direction.FORWARD);
+//        rightnom.setDirection(CRServo.Direction.REVERSE);
 
         // Set the behaviour when motors' power is set to zero -- whether to brake
         FR.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         FL.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         BR.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         BL.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
-        elbow.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         pullup.setDirection(DcMotorSimple.Direction.FORWARD);
-        shoulder.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -148,22 +139,19 @@ public class OmniDrive extends JackalopeOpMode {
 
             // If the joystick values are past the threshold, set the power variables to the clipped calculated power.
             // Otherwise, set them to zero.
+            if (Math.abs(gamepad1LeftX) > .2 || Math.abs(gamepad1LeftY) > .2 || Math.abs(gamepad1RightX) > .2) {
 
-
-
-//            if (Math.abs(gamepad1LeftX) > .2 || Math.abs(gamepad1LeftY) > .2 || Math.abs(gamepad1RightX) > .2) {
-//
-//                // clip the right/left values so that the values never exceed +/- 1
-//                frontRight = Range.clip(frontRight, -1, 1);
-//                frontLeft = Range.clip(frontLeft, -1, 1);
-//                backLeft = Range.clip(backLeft, -1, 1);
-//                backRight = Range.clip(backRight, -1, 1);
-//            } else {
-//                frontRight = 0;
-//                frontLeft = 0;
-//                backRight = 0;
-//                backLeft = 0;
-//            }
+                // clip the right/left values so that the values never exceed +/- 1
+                frontRight = Range.clip(frontRight, -.3, .3);
+                frontLeft = Range.clip(frontLeft, -.3, .3);
+                backLeft = Range.clip(backLeft, -.3, .3);
+                backRight = Range.clip(backRight, -.3, .3);
+            } else {
+                frontRight = 0;
+                frontLeft = 0;
+                backRight = 0;
+                backLeft = 0;
+            }
 
 //            if (gamepad2DpadUp) {
 //                shoulder.setPower(.5);
@@ -171,14 +159,6 @@ public class OmniDrive extends JackalopeOpMode {
 //                shoulder.setPower(-.5);
 //            } else {
 //                shoulder.setPower(0);
-//            }
-//
-//            if (xbutton) {
-//                elbow.setPower(.6);
-//            } else if (bbutton) {
-//                elbow.setPower(-.6);
-//            } else {
-//                elbow.setPower(0);
 //            }
 
 //            if (rightbumper) {
@@ -223,9 +203,7 @@ public class OmniDrive extends JackalopeOpMode {
         BL.setPower(0);
         FR.setPower(0);
         BR.setPower(0);
-        elbow.setPower(0);
         pullup.setPower(0);
-        shoulder.setPower(0);
 
     }
 

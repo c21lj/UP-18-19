@@ -58,9 +58,7 @@ public class HardwareUPLauren
     public DcMotor  FR   = null;
     public DcMotor  BL   = null;
     public DcMotor  BR  = null;
-    public DcMotor  elbow = null;
     public DcMotor  pullup = null;
-    public DcMotor  shoulder = null;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -81,15 +79,12 @@ public class HardwareUPLauren
         FR = hwMap.get(DcMotor.class, "frontright");
         BL  = hwMap.get(DcMotor.class, "backleft");
         BR  = hwMap.get(DcMotor.class, "backright");
-        elbow  = hwMap.get(DcMotor.class, "elbow");
         pullup  = hwMap.get(DcMotor.class, "pullup");
-        shoulder  = hwMap.get(DcMotor.class, "shoulder");
         FL.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         FR.setDirection(DcMotor.Direction.FORWARD);// Set to FORWARD if using AndyMark motors
         BL.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         BR.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         pullup.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
-        shoulder.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
 
 
         // Set all motors to zero power
@@ -97,9 +92,7 @@ public class HardwareUPLauren
         FR.setPower(0);
         BL.setPower(0);
         BR.setPower(0);
-        elbow.setPower(0);
         pullup.setPower(0);
-        shoulder.setPower(0);
 
 
         // Set all motors to run without encoders.
@@ -108,9 +101,7 @@ public class HardwareUPLauren
         FR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        elbow.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         pullup.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        shoulder.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
     }
 }
