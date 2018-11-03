@@ -125,7 +125,7 @@ public class AutoUPNoDrive extends JackalopeAutoMode {
             telemetry.addData("power", pullup.getPower());
             telemetry.update();
             delay(8500);
-            pullup.setPower(0);//pullup up?
+            pullup.setPower(0);//pullup up
             telemetry.addData("power", pullup.getPower());
             telemetry.update();
             delay(200000);
