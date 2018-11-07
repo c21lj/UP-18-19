@@ -100,7 +100,7 @@ DcMotor FR = null;
 
     }
     public void goForward(){
-        FL.setPower(.4);
+        FL.setPower(.3);
         BL.setPower(.3);
         FR.setPower(-.3);
         BR.setPower(-.3);
