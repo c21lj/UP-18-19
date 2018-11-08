@@ -161,39 +161,6 @@ public class OmniDrive extends JackalopeOpMode {
                 backLeft = 0;
             }
 
-            if (gamepad1DpadUp) {
-                //forward
-                FL.setPower(.4);
-                BL.setPower(.4);
-                FR.setPower(-.4);
-                BR.setPower(-.4);
-            }
-
-            if (gamepad1DpadDown) {
-                //back
-                FL.setPower(-.4);
-                BL.setPower(-.4);
-                FR.setPower(.4);
-                BR.setPower(.4);
-            }
-
-            if (gamepad1DpadLeft) {
-                //left
-                FL.setPower(.4);
-                BL.setPower(-.4);
-                FR.setPower(.4);
-                BR.setPower(-.4);
-            }
-
-            if (gamepad1DpadRight) {
-                //right
-                FL.setPower(-.4);
-                BL.setPower(.4);
-                FR.setPower(-.4);
-                BR.setPower(.4);
-
-            }
-
 //            if (gamepad2DpadUp) {
 //                shoulder.setPower(.5);
 //            } else if (gamepad2DpadDown) {
