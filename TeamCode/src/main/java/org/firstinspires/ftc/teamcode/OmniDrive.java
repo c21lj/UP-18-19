@@ -51,6 +51,10 @@ public class OmniDrive extends JackalopeOpMode {
     double lefttrigger;
     boolean gamepad2DpadDown;
     boolean gamepad2DpadUp;
+    boolean gamepad1DpadUp;
+    boolean gamepad1DpadDown;
+    boolean gamepad1DpadLeft;
+    boolean gamepad1DpadRight;
 
     @Override
     public void strafe(boolean strafe) {
@@ -130,6 +134,10 @@ public class OmniDrive extends JackalopeOpMode {
             ybutton = gamepad2.y;
             gamepad2DpadDown = gamepad2.dpad_down;
             gamepad2DpadUp = gamepad2.dpad_up;
+            gamepad1DpadUp = gamepad1.dpad_up;
+            gamepad1DpadDown = gamepad1.dpad_down;
+            gamepad1DpadLeft = gamepad1.dpad_down;
+            gamepad1DpadRight = gamepad1.dpad_right;
 
             // Apply the holonomic formulas to calculate the powers of the motors
             frontLeft = -gamepad1LeftY - gamepad1LeftX - gamepad1RightX;
@@ -151,6 +159,39 @@ public class OmniDrive extends JackalopeOpMode {
                 frontLeft = 0;
                 backRight = 0;
                 backLeft = 0;
+            }
+
+            if (gamepad1DpadUp) {
+                //forward
+                FL.setPower(.4);
+                BL.setPower(.4);
+                FR.setPower(-.4);
+                BR.setPower(-.4);
+            }
+
+            if (gamepad1DpadDown) {
+                //back
+                FL.setPower(-.4);
+                BL.setPower(-.4);
+                FR.setPower(.4);
+                BR.setPower(.4);
+            }
+
+            if (gamepad1DpadLeft) {
+                //left
+                FL.setPower(.4);
+                BL.setPower(-.4);
+                FR.setPower(.4);
+                BR.setPower(-.4);
+            }
+
+            if (gamepad1DpadRight) {
+                //right
+                FL.setPower(-.4);
+                BL.setPower(.4);
+                FR.setPower(-.4);
+                BR.setPower(.4);
+
             }
 
 //            if (gamepad2DpadUp) {
