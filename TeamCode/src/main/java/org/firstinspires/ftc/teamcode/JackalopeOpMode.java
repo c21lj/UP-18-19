@@ -56,6 +56,8 @@ DcMotor FR = null;
 
     DcMotor pullup = null;
 
+    DcMotor nom = null;
+
 //    Behaviour when the motors are stopped
 
     static final ZeroPowerBehavior ZERO_POWER_BEHAVIOR = ZeroPowerBehavior.BRAKE;

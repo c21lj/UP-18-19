@@ -21,8 +21,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 public class OmniDrive extends JackalopeOpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-//    private CRServo leftnom = null;
-//    private CRServo rightnom = null;
+    private CRServo leftRotate = null;
+    private CRServo rightRotate = null;
     private boolean read = false;
     private ColorSensor CBL;
     private boolean gripped = false;
@@ -67,6 +67,7 @@ public class OmniDrive extends JackalopeOpMode {
         BR.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         BL.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         pullup.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
+        nom.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
 
     }
 
@@ -83,8 +84,9 @@ public class OmniDrive extends JackalopeOpMode {
         BR = hardwareMap.get(DcMotor.class, "BR");
         BL = hardwareMap.get(DcMotor.class, "BL");
         pullup = hardwareMap.get(DcMotor.class, "pullup");
-//        leftnom = hardwareMap.get(CRServo.class, "leftnom");
-//        rightnom = hardwareMap.get(CRServo.class, "rightnom");
+        leftRotate = hardwareMap.get(CRServo.class, "leftnom");
+        rightRotate = hardwareMap.get(CRServo.class, "rightnom");
+        nom = hardwareMap.get(DcMotor.class, "nom");
 
         // Set the initial directions of the motors
         FL.setDirection(DcMotor.Direction.REVERSE);
@@ -92,8 +94,9 @@ public class OmniDrive extends JackalopeOpMode {
         BR.setDirection(DcMotor.Direction.REVERSE);
         FR.setDirection(DcMotor.Direction.REVERSE);
         pullup.setDirection(DcMotorSimple.Direction.FORWARD);
-//        leftnom.setDirection(CRServo.Direction.FORWARD);
-//        rightnom.setDirection(CRServo.Direction.REVERSE);
+        leftRotate.setDirection(CRServo.Direction.FORWARD);
+        rightRotate.setDirection(CRServo.Direction.REVERSE);
+        nom.setDirection(CRServo.Direction.FORWARD);
 
         // Set the behaviour when motors' power is set to zero -- whether to brake
         FR.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
@@ -101,6 +104,7 @@ public class OmniDrive extends JackalopeOpMode {
         BR.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         BL.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         pullup.setDirection(DcMotorSimple.Direction.FORWARD);
+        nom.setDirection(DcMotorSimple.Direction.FORWARD);
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -169,17 +173,27 @@ public class OmniDrive extends JackalopeOpMode {
 //                shoulder.setPower(0);
 //            }
 
-//            if (rightbumper) {
-//                leftnom.setPower(.8);
-//                rightnom.setPower(.8);
-//            } else if (leftbumper) {
-//                leftnom.setPower(-.8);
-//                rightnom.setPower(-.8);
-//            } else {
-//                leftnom.setPower(0);
-//                rightnom.setPower(0);
-//
-//            }
+            if (rightbumper) {
+                leftRotate.setPower(.8);
+                rightRotate.setPower(.8);
+            } else if (leftbumper) {
+                leftRotate.setPower(-.8);
+                rightRotate.setPower(-.8);
+            } else {
+                leftRotate.setPower(0);
+                rightRotate.setPower(0);
+
+            }
+
+            //nom:
+            if (xbutton) {
+                nom.setPower(.8);
+            } else if (bbutton) {
+                nom.setPower(-.8);
+            } else {
+                nom.setPower(0);
+
+            }
 
 
             if (abutton) {
