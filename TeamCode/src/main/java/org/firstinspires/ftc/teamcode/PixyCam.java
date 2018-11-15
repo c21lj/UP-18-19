@@ -58,9 +58,13 @@ public class PixyCam extends LinearOpMode {
                 telemetry.addData("Byte 13", pixy.read8(13));
                 telemetry.update();
 
-                /*
-                Yeah I actually have no idea where to go from here but it should at least be able to get data to the phone
-                 */
+                //Turn in circles until it detects the thing (Theres no motor code yet)
+
+                if ( ( (pixy.read8(6)==0) || (pixy.read8(7)==0) ) && (pixy.read8(8)==0) || (pixy.read8(9)==0) ) {
+                    //If pixy signature is in the center ----> something
+                    //Most likely just drive forward
+                    //I haven't actually set the signatures yet so welp
+                }
             }
         }
     }
