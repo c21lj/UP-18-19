@@ -194,6 +194,7 @@ abstract class JackalopeAutoMode extends LinearOpMode {
                 FR.setPower(.05);
                 BR.setPower(.05);
 
+                //I'm not sure if this section will work because so far I'm not sure what the data means and why there are two different things
                 if ( ( (pixy.read8(6)==0) || (pixy.read8(7)==0) ) && (pixy.read8(8)==0) || (pixy.read8(9)==0) ) {
                     //If pixy signature is in the center ----> drive forward
                     //I haven't actually set the signatures yet so welp
