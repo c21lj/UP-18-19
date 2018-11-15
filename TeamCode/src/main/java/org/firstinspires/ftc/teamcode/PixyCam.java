@@ -4,6 +4,13 @@ import com.qualcomm.robotcore.hardware.I2cAddr;
 import com.qualcomm.robotcore.hardware.I2cDeviceSynch;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
 /*
 Bytes    16-bit word    Description
@@ -15,7 +22,7 @@ Bytes    16-bit word    Description
         8, 9     y              y center of object
         10, 11   y              width of object
         12, 13   y              height of object
-        */
+*/
 
 @TeleOp(name="PixyCam", group="PixyCam")
 public class PixyCam extends LinearOpMode {
