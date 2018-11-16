@@ -84,8 +84,8 @@ public class OmniDrive extends JackalopeOpMode {
         BR = hardwareMap.get(DcMotor.class, "BR");
         BL = hardwareMap.get(DcMotor.class, "BL");
         pullup = hardwareMap.get(DcMotor.class, "pullup");
-        leftRotate = hardwareMap.get(CRServo.class, "leftnom");
-        rightRotate = hardwareMap.get(CRServo.class, "rightnom");
+        leftRotate = hardwareMap.get(CRServo.class, "leftRotate");
+        rightRotate = hardwareMap.get(CRServo.class, "rightRotate");
         nom = hardwareMap.get(DcMotor.class, "nom");
 
         // Set the initial directions of the motors
@@ -187,9 +187,9 @@ public class OmniDrive extends JackalopeOpMode {
 
             //nom:
             if (xbutton) {
-                nom.setPower(.8);
+                nom.setPower(1);
             } else if (bbutton) {
-                nom.setPower(-.8);
+                nom.setPower(-1);
             } else {
                 nom.setPower(0);
 
