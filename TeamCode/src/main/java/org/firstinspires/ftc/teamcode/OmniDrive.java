@@ -21,8 +21,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 public class OmniDrive extends JackalopeOpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-    private CRServo leftRotate = null;
-    private CRServo rightRotate = null;
+    private Servo leftRotate = null;
+    private Servo rightRotate = null;
     private boolean read = false;
     private ColorSensor CBL;
     private boolean gripped = false;
@@ -84,8 +84,8 @@ public class OmniDrive extends JackalopeOpMode {
         BR = hardwareMap.get(DcMotor.class, "BR");
         BL = hardwareMap.get(DcMotor.class, "BL");
         pullup = hardwareMap.get(DcMotor.class, "pullup");
-        leftRotate = hardwareMap.get(CRServo.class, "leftRotate");
-        rightRotate = hardwareMap.get(CRServo.class, "rightRotate");
+        leftRotate = hardwareMap.get(Servo.class, "leftRotate");
+        rightRotate = hardwareMap.get(Servo.class, "rightRotate");
         nom = hardwareMap.get(DcMotor.class, "nom");
 
         // Set the initial directions of the motors
@@ -94,9 +94,9 @@ public class OmniDrive extends JackalopeOpMode {
         BR.setDirection(DcMotor.Direction.REVERSE);
         FR.setDirection(DcMotor.Direction.REVERSE);
         pullup.setDirection(DcMotorSimple.Direction.FORWARD);
-        leftRotate.setDirection(CRServo.Direction.FORWARD);
-        rightRotate.setDirection(CRServo.Direction.REVERSE);
-        nom.setDirection(CRServo.Direction.FORWARD);
+        leftRotate.setDirection(Servo.Direction.FORWARD);
+        rightRotate.setDirection(Servo.Direction.REVERSE);
+        nom.setDirection(DcMotor.Direction.FORWARD);
 
         // Set the behaviour when motors' power is set to zero -- whether to brake
         FR.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
@@ -174,14 +174,15 @@ public class OmniDrive extends JackalopeOpMode {
 //            }
 
             if (rightbumper) {
-                leftRotate.setPower(.8);
-                rightRotate.setPower(.8);
-            } else if (leftbumper) {
-                leftRotate.setPower(-.8);
-                rightRotate.setPower(-.8);
-            } else {
-                leftRotate.setPower(0);
-                rightRotate.setPower(0);
+                leftRotate.setPosition(1);
+                rightRotate.setPosition(1);
+           } // else if (leftbumper) {
+//                leftRotate.setPosition(0);
+//                rightRotate.setPosition(0);
+        //    }
+            else {
+                leftRotate.setPosition(.3);
+                rightRotate.setPosition(.3);
 
             }
 
