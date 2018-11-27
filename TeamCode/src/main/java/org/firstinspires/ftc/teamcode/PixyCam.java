@@ -12,18 +12,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-/*
-Bytes    16-bit word    Description
-        ----------------------------------------------------------------
-        0, 1     y              sync: 0xaa55=normal object, 0xaa56=color code object
-        2, 3     y              checksum (sum of all 16-bit words 2-6, that is, bytes 4-13)
-        4, 5     y              signature number
-        6, 7     y              x center of object
-        8, 9     y              y center of object
-        10, 11   y              width of object
-        12, 13   y              height of object
-*/
-
 @TeleOp(name="PixyCam", group="PixyCam")
 public class PixyCam extends LinearOpMode {
 
@@ -48,21 +36,32 @@ public class PixyCam extends LinearOpMode {
             waitForStart();
 
             while (opModeIsActive()) {
+                /*
+                Bytes    16-bit word    Description
+                ----------------------------------------------------------------
+                0, 1     y              sync: 0xaa55=normal object, 0xaa56=color code object
+                2, 3     y              checksum (sum of all 16-bit words 2-6, that is, bytes 4-13)
+                4, 5     y              signature number
+                6, 7     y              x center of object
+                8, 9     y              y center of object
+                10, 11   y              width of object
+                12, 13   y              height of object
+                */
                 //send every byte of data that we can to the phone screen
-                telemetry.addData("Byte 0", pixy.read8(0));
-                telemetry.addData("Byte 1", pixy.read8(1));
-                telemetry.addData("Byte 2", pixy.read8(2));
-                telemetry.addData("Byte 3", pixy.read8(3));
-                telemetry.addData("Byte 4", pixy.read8(4));
-                telemetry.addData("Byte 5", pixy.read8(5));
-                telemetry.addData("Byte 6", pixy.read8(6));
-                telemetry.addData("Byte 7", pixy.read8(7));
-                telemetry.addData("Byte 8", pixy.read8(8));
-                telemetry.addData("Byte 9", pixy.read8(9));
-                telemetry.addData("Byte 10", pixy.read8(10));
-                telemetry.addData("Byte 11", pixy.read8(11));
-                telemetry.addData("Byte 12", pixy.read8(12));
-                telemetry.addData("Byte 13", pixy.read8(13));
+                telemetry.addData("Object1", pixy.read8(0));
+                telemetry.addData("Object2", pixy.read8(1));
+                telemetry.addData("Checksum1", pixy.read8(2));
+                telemetry.addData("Checksum2", pixy.read8(3));
+                telemetry.addData("Signature1", pixy.read8(4));
+                telemetry.addData("Signature2", pixy.read8(5));
+                telemetry.addData("XCoordinate1", pixy.read8(6));
+                telemetry.addData("XCoordinate2", pixy.read8(7));
+                telemetry.addData("YCoordinate1", pixy.read8(8));
+                telemetry.addData("YCoordinate2", pixy.read8(9));
+                telemetry.addData("Width1", pixy.read8(10));
+                telemetry.addData("Width2", pixy.read8(11));
+                telemetry.addData("Height1", pixy.read8(12));
+                telemetry.addData("Height2", pixy.read8(13));
                 telemetry.update();
 
                 //Turn in circles until it detects the thing (Theres no motor code yet)
