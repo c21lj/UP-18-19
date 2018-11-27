@@ -102,8 +102,8 @@ public class OmniDrive extends JackalopeOpMode {
         BR.setDirection(DcMotor.Direction.REVERSE);
         FR.setDirection(DcMotor.Direction.REVERSE);
         pullup.setDirection(DcMotorSimple.Direction.FORWARD);
-        leftRotate.setDirection(Servo.Direction.FORWARD);
-        rightRotate.setDirection(Servo.Direction.REVERSE);
+        leftRotate.setDirection(Servo.Direction.REVERSE);
+        rightRotate.setDirection(Servo.Direction.FORWARD);
         nom.setDirection(DcMotor.Direction.FORWARD);
         arm.setDirection(DcMotor.Direction.REVERSE);
         string.setDirection(DcMotor.Direction.REVERSE);
@@ -192,15 +192,15 @@ public class OmniDrive extends JackalopeOpMode {
 //            }
 
             if (rightbumper) {
-                leftRotate.setPosition(1);
-                rightRotate.setPosition(1);
-           } // else if (leftbumper) {
-//                leftRotate.setPosition(0);
-//                rightRotate.setPosition(0);
-        //    }
+                leftRotate.setPosition(.65);
+                rightRotate.setPosition(.65);
+           }  else if (leftbumper) {
+                leftRotate.setPosition(.5);
+                rightRotate.setPosition(.5);
+      }
             else {
-                leftRotate.setPosition(.3);
-                rightRotate.setPosition(.3);
+                leftRotate.setPosition(0);
+                rightRotate.setPosition(0);
 
             }
 
@@ -234,9 +234,9 @@ public class OmniDrive extends JackalopeOpMode {
 
             //arm
             if (rightbumperDriver) {
-                arm.setPower(.7);
+                arm.setPower(.3);
             } else if (leftbumperDriver) {
-                arm.setPower(-.7);
+                arm.setPower(-.3);
             } else {
                 arm.setPower(0);
             }

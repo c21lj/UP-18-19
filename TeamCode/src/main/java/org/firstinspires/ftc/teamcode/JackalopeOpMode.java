@@ -41,6 +41,8 @@ DcMotor FR = null;
      */
     DcMotor BL = null;
 
+    Servo rightRotate = null;
+    Servo leftRotate = null;
     /**
      * left nom servo
      */
