@@ -51,10 +51,14 @@ public class OmniDrive extends JackalopeOpMode {
     double lefttrigger;
     boolean gamepad2DpadDown;
     boolean gamepad2DpadUp;
+    boolean gamepad2DpadLeft;
+    boolean gamepad2DpadRight;
     boolean gamepad1DpadUp;
     boolean gamepad1DpadDown;
     boolean gamepad1DpadLeft;
     boolean gamepad1DpadRight;
+    boolean rightbumperDriver;
+    boolean leftbumperDriver;
 
     @Override
     public void strafe(boolean strafe) {
@@ -68,6 +72,8 @@ public class OmniDrive extends JackalopeOpMode {
         BL.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         pullup.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         nom.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
+        arm.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
+        string.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
 
     }
 
@@ -87,6 +93,8 @@ public class OmniDrive extends JackalopeOpMode {
         leftRotate = hardwareMap.get(Servo.class, "leftRotate");
         rightRotate = hardwareMap.get(Servo.class, "rightRotate");
         nom = hardwareMap.get(DcMotor.class, "nom");
+        arm = hardwareMap.get(DcMotor.class, "arm");
+        string = hardwareMap.get(DcMotor.class, "string");
 
         // Set the initial directions of the motors
         FL.setDirection(DcMotor.Direction.REVERSE);
@@ -97,13 +105,19 @@ public class OmniDrive extends JackalopeOpMode {
         leftRotate.setDirection(Servo.Direction.FORWARD);
         rightRotate.setDirection(Servo.Direction.REVERSE);
         nom.setDirection(DcMotor.Direction.FORWARD);
+        arm.setDirection(DcMotor.Direction.REVERSE);
+        string.setDirection(DcMotor.Direction.REVERSE);
+
 
         // Set the behaviour when motors' power is set to zero -- whether to brake
         FR.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         FL.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         BR.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         BL.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
-        pullup.setDirection(DcMotorSimple.Direction.FORWARD);
+        arm.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
+        string.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
+        arm.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
+        pullup.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         nom.setDirection(DcMotorSimple.Direction.FORWARD);
 
         // Tell the driver that initialization is complete.
@@ -130,6 +144,8 @@ public class OmniDrive extends JackalopeOpMode {
             gamepad1RightX = gamepad1.right_stick_x * scale;
             rightbumper = gamepad2.right_bumper;
             leftbumper = gamepad2.left_bumper;
+            rightbumperDriver = gamepad1.right_bumper;
+            leftbumperDriver = gamepad1.left_bumper;
             righttrigger = gamepad2.right_trigger;
             lefttrigger = gamepad2.left_trigger;
             abutton = gamepad2.a;
@@ -138,9 +154,11 @@ public class OmniDrive extends JackalopeOpMode {
             ybutton = gamepad2.y;
             gamepad2DpadDown = gamepad2.dpad_down;
             gamepad2DpadUp = gamepad2.dpad_up;
+            gamepad2DpadLeft = gamepad2.dpad_left;
+            gamepad2DpadRight = gamepad2.dpad_right;
             gamepad1DpadUp = gamepad1.dpad_up;
             gamepad1DpadDown = gamepad1.dpad_down;
-            gamepad1DpadLeft = gamepad1.dpad_down;
+            gamepad1DpadLeft = gamepad1.dpad_left;
             gamepad1DpadRight = gamepad1.dpad_right;
 
             // Apply the holonomic formulas to calculate the powers of the motors
@@ -203,6 +221,24 @@ public class OmniDrive extends JackalopeOpMode {
                 pullup.setPower(-.7);
             } else {
                 pullup.setPower(0);
+            }
+
+            //string
+            if (gamepad2DpadLeft) {
+                string.setPower(.8);
+            } else if (gamepad2DpadRight) {
+                string.setPower(-.8);
+            } else {
+                string.setPower(0);
+            }
+
+            //arm
+            if (rightbumperDriver) {
+                arm.setPower(.7);
+            } else if (leftbumperDriver) {
+                arm.setPower(-.7);
+            } else {
+                arm.setPower(0);
             }
 
             // Send the power variables to the driver.
