@@ -25,6 +25,7 @@ public class AutoUP extends JackalopeAutoMode {
 //    private CRServo leftnom = null;
 //    private CRServo rightnom = null;
     private Servo flipper = null;
+    private Servo marker = null;
     private boolean read = false;
     private ColorSensor CBL;
     private boolean gripped = false;
@@ -86,6 +87,7 @@ public class AutoUP extends JackalopeAutoMode {
         BL = hardwareMap.get(DcMotor.class, "BL");
         pullup = hardwareMap.get(DcMotor.class, "pullup");
         flipper = hardwareMap.get(Servo.class, "flipper");
+        marker = hardwareMap.get(Servo.class, "marker");
 //        leftnom = hardwareMap.get(CRServo.class, "leftnom");
 //        rightnom = hardwareMap.get(CRServo.class, "rightnom");
 
@@ -96,6 +98,8 @@ public class AutoUP extends JackalopeAutoMode {
         FR.setDirection(DcMotor.Direction.REVERSE);
         pullup.setDirection(DcMotorSimple.Direction.FORWARD);
         flipper.setDirection(Servo.Direction.FORWARD);
+        marker.setDirection(Servo.Direction.FORWARD);
+
 //        leftnom.setDirection(CRServo.Direction.FORWARD);
 //        rightnom.setDirection(CRServo.Direction.FORWARD);
 
@@ -119,7 +123,7 @@ public class AutoUP extends JackalopeAutoMode {
 
             // Loop until the op mode is stopped. changes
             telemetry.addData("read", read);
-            flipper.setPosition(.9);
+            marker.setPosition(.9);
 
 //            delay(25000);
             pullup.setPower(.7);//pullup down
@@ -132,7 +136,7 @@ public class AutoUP extends JackalopeAutoMode {
             goLeft();
             delay(4000);
             goStop();
-            flipper.setPosition(0);
+            marker.setPosition(0);
 //            delay(2000);
 //            flipper.setPosition(.2);
             delay(200000);

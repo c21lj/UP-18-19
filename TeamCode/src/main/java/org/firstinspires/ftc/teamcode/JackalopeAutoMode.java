@@ -54,6 +54,7 @@ abstract class JackalopeAutoMode extends LinearOpMode {
 
     //team marker flipper
     Servo flipper = null;
+    Servo marker = null;
 
     DcMotor pullup = null;
 

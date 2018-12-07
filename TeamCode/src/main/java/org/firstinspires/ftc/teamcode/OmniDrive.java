@@ -23,6 +23,7 @@ public class OmniDrive extends JackalopeOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     private Servo leftRotate = null;
     private Servo rightRotate = null;
+    private Servo marker = null;
     private boolean read = false;
     private ColorSensor CBL;
     private boolean gripped = false;
@@ -92,6 +93,8 @@ public class OmniDrive extends JackalopeOpMode {
         pullup = hardwareMap.get(DcMotor.class, "pullup");
         leftRotate = hardwareMap.get(Servo.class, "leftRotate");
         rightRotate = hardwareMap.get(Servo.class, "rightRotate");
+        marker = hardwareMap.get(Servo.class, "marker");
+
         nom = hardwareMap.get(DcMotor.class, "nom");
         arm = hardwareMap.get(DcMotor.class, "arm");
         string = hardwareMap.get(DcMotor.class, "string");
