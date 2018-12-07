@@ -95,30 +95,30 @@ DcMotor FR = null;
         }
     }
     public void turnRight(){
-        FL.setPower(.3);
-        BL.setPower(.3);
-        FR.setPower(.3);
-        BR.setPower(.3);
+        FL.setPower(.6);
+        BL.setPower(.6);
+        FR.setPower(.6);
+        BR.setPower(.6);
     }
     public void turnLeft(){
-        FL.setPower(-.3);
-        BL.setPower(-.3);
-        FR.setPower(-.3);
-        BR.setPower(-.3);
+        FL.setPower(-.6);
+        BL.setPower(-.6);
+        FR.setPower(-.6);
+        BR.setPower(-.6);
 
     }
     public void goForward(){
-        FL.setPower(.3);
-        BL.setPower(.3);
-        FR.setPower(-.3);
-        BR.setPower(-.3);
+        FL.setPower(.6);
+        BL.setPower(.6);
+        FR.setPower(-.6);
+        BR.setPower(-.6);
 
     }
     public void goBack(){
-        FL.setPower(-.3);
-        BL.setPower(-.3);
-        FR.setPower(.3);
-        BR.setPower(.3);
+        FL.setPower(-.6);
+        BL.setPower(-.6);
+        FR.setPower(.6);
+        BR.setPower(.6);
     }
     public void goStop(){
         FL.setPower(0);

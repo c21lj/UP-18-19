@@ -172,10 +172,10 @@ public class OmniDrive extends JackalopeOpMode {
             if (Math.abs(gamepad1LeftX) > .2 || Math.abs(gamepad1LeftY) > .2 || Math.abs(gamepad1RightX) > .2) {
 
                 // clip the right/left values so that the values never exceed +/- 1
-                frontRight = Range.clip(frontRight, -.3, .3);
-                frontLeft = Range.clip(frontLeft, -.3, .3);
-                backLeft = Range.clip(backLeft, -.3, .3);
-                backRight = Range.clip(backRight, -.3, .3);
+                frontRight = Range.clip(frontRight, -.6, .6);
+                frontLeft = Range.clip(frontLeft, -.6, .6);
+                backLeft = Range.clip(backLeft, -.6, .6);
+                backRight = Range.clip(backRight, -.6, .6);
             } else {
                 frontRight = 0;
                 frontLeft = 0;
@@ -192,7 +192,7 @@ public class OmniDrive extends JackalopeOpMode {
 //            }
 
             if (rightbumper) {
-               rightRotate.setPosition(.7);
+               rightRotate.setPosition(.8);
 //                rightRotate.setPosition(.65);
     //            leftRotate.setPosition(.9);
         //        rightRotate.setPosition(.9);
@@ -201,7 +201,7 @@ public class OmniDrive extends JackalopeOpMode {
      //           rightRotate.setPosition(.5);
       }
             else {
-                rightRotate.setPosition(0);
+                rightRotate.setPosition(.1);
             //    rightRotate.setPosition(0);
 
             }
@@ -226,9 +226,9 @@ public class OmniDrive extends JackalopeOpMode {
             }
 
             //string
-            if (gamepad2DpadLeft) {
+            if (gamepad2DpadDown) {
                 string.setPower(.8);
-            } else if (gamepad2DpadRight) {
+            } else if (gamepad2DpadUp) {
                 string.setPower(-.8);
             } else {
                 string.setPower(0);
@@ -236,9 +236,9 @@ public class OmniDrive extends JackalopeOpMode {
 
             //arm
             if (rightbumperDriver) {
-                arm.setPower(.3);
+                arm.setPower(.7);
             } else if (leftbumperDriver) {
-                arm.setPower(-.3);
+                arm.setPower(-.7);
             } else {
                 arm.setPower(0);
             }
