@@ -17,7 +17,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-@Autonomous(name = "JackalopeAutoNoDrive")
+@Autonomous(name = "AutoNoDrive")
 
 public class AutoUPNoDrive extends JackalopeAutoMode {
     // Declare OpMode members.
@@ -67,12 +67,12 @@ public class AutoUPNoDrive extends JackalopeAutoMode {
         pullup.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
     }
 
-    public void delay(int time){
-        double startTime = clock.milliseconds();
-        while((clock.milliseconds() - startTime < time) && !isStopRequested()){
-
-        }
-    }
+//    public void delay(int time){
+//        double startTime = clock.milliseconds();
+//        while((clock.milliseconds() - startTime < time) && !isStopRequested()){
+//
+//        }
+//    }
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -86,8 +86,6 @@ public class AutoUPNoDrive extends JackalopeAutoMode {
         BL = hardwareMap.get(DcMotor.class, "BL");
         pullup = hardwareMap.get(DcMotor.class, "pullup");
         flipper = hardwareMap.get(Servo.class, "flipper");
-//        leftnom = hardwareMap.get(CRServo.class, "leftnom");
-//        rightnom = hardwareMap.get(CRServo.class, "rightnom");
 
         // Set the initial directions of the motors
         FL.setDirection(DcMotor.Direction.REVERSE);
@@ -96,8 +94,6 @@ public class AutoUPNoDrive extends JackalopeAutoMode {
         FR.setDirection(DcMotor.Direction.REVERSE);
         pullup.setDirection(DcMotorSimple.Direction.FORWARD);
         flipper.setDirection(Servo.Direction.FORWARD);
-//        leftnom.setDirection(CRServo.Direction.FORWARD);
-//        rightnom.setDirection(CRServo.Direction.FORWARD);
 
         // Set the behaviour when motors' power is set to zero -- whether to brake
         FR.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
@@ -115,20 +111,20 @@ public class AutoUPNoDrive extends JackalopeAutoMode {
 
         // Wait for the start button to be pressed on the phone.
         waitForStart();
-        while (opModeIsActive() && !isStopRequested()) {
+//        while (opModeIsActive() && !isStopRequested()) {
 
             // Loop until the op mode is stopped. changes
             telemetry.addData("read", read);
 
 //            delay(25000);
-            pullup.setPower(.7);//pullup down
+            pullup.setPower(.7);
             telemetry.addData("power", pullup.getPower());
             telemetry.update();
-            delay(8500);
-            pullup.setPower(0);//pullup up
+            sleep(9500);
+            pullup.setPower(0);
             telemetry.addData("power", pullup.getPower());
             telemetry.update();
-            delay(200000);
+//            delay(200000);
 
 
 //            strafe(true);
@@ -198,15 +194,15 @@ public class AutoUPNoDrive extends JackalopeAutoMode {
             idle();
         }
         // When the op mode is told to stop, stop the motors.
-        while(isStopRequested()){
-            FL.setPower(0);
-            BL.setPower(0);
-            FR.setPower(0);
-            BR.setPower(0);
-            pullup.setPower(0);
-        }
+//        while(isStopRequested()){
+//            FL.setPower(0);
+//            BL.setPower(0);
+//            FR.setPower(0);
+//            BR.setPower(0);
+//            pullup.setPower(0);
+//        }
 
-    }
+//    }
 
 
     /*
