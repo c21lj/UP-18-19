@@ -95,16 +95,16 @@ DcMotor FR = null;
         }
     }
     public void turnRight(){
-        FL.setPower(.6);
-        BL.setPower(.6);
-        FR.setPower(.6);
-        BR.setPower(.6);
+        FL.setPower(.3);
+        BL.setPower(.3);
+        FR.setPower(.3);
+        BR.setPower(.3);
     }
     public void turnLeft(){
-        FL.setPower(-.6);
-        BL.setPower(-.6);
-        FR.setPower(-.6);
-        BR.setPower(-.6);
+        FL.setPower(-.3);
+        BL.setPower(-.3);
+        FR.setPower(-.3);
+        BR.setPower(-.3);
 
     }
     public void goForward(){

@@ -23,7 +23,6 @@ public class OmniDrive extends JackalopeOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     private Servo leftRotate = null;
     private Servo rightRotate = null;
-    private Servo marker = null;
     private boolean read = false;
     private ColorSensor CBL;
     private boolean gripped = false;
@@ -93,7 +92,6 @@ public class OmniDrive extends JackalopeOpMode {
         pullup = hardwareMap.get(DcMotor.class, "pullup");
         leftRotate = hardwareMap.get(Servo.class, "leftRotate");
         rightRotate = hardwareMap.get(Servo.class, "rightRotate");
-        marker = hardwareMap.get(Servo.class, "marker");
 
         nom = hardwareMap.get(DcMotor.class, "nom");
         arm = hardwareMap.get(DcMotor.class, "arm");
@@ -188,20 +186,15 @@ public class OmniDrive extends JackalopeOpMode {
 
             if (rightbumper) {
                rightRotate.setPosition(.8);
-//                rightRotate.setPosition(.65);
-    //            leftRotate.setPosition(.9);
-        //        rightRotate.setPosition(.9);
            }  else if (leftbumper) {
                 rightRotate.setPosition(.5);
-     //           rightRotate.setPosition(.5);
       }
             else {
-                rightRotate.setPosition(.1);
-            //    rightRotate.setPosition(0);
+                rightRotate.setPosition(.05);
 
             }
 
-            //nom:
+            //nom (make it go in and out):
             if (righttrigger>.2) {
                 nom.setPower(1);
             } else if (lefttrigger>.2) {
@@ -211,7 +204,7 @@ public class OmniDrive extends JackalopeOpMode {
 
             }
 
-
+            //pullup mechanism (make it go up and down):
             if (abutton) {
                 pullup.setPower(.7);
             } else if (ybutton) {

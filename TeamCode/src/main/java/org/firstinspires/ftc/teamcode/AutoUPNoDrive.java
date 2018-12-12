@@ -67,12 +67,6 @@ public class AutoUPNoDrive extends JackalopeAutoMode {
         pullup.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
     }
 
-//    public void delay(int time){
-//        double startTime = clock.milliseconds();
-//        while((clock.milliseconds() - startTime < time) && !isStopRequested()){
-//
-//        }
-//    }
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -111,7 +105,6 @@ public class AutoUPNoDrive extends JackalopeAutoMode {
 
         // Wait for the start button to be pressed on the phone.
         waitForStart();
-//        while (opModeIsActive() && !isStopRequested()) {
 
             // Loop until the op mode is stopped. changes
             telemetry.addData("read", read);
@@ -120,67 +113,13 @@ public class AutoUPNoDrive extends JackalopeAutoMode {
             pullup.setPower(.7);
             telemetry.addData("power", pullup.getPower());
             telemetry.update();
-            sleep(9500);
+            sleep(8100);
             pullup.setPower(0);
             telemetry.addData("power", pullup.getPower());
             telemetry.update();
-//            delay(200000);
-
-
-//            strafe(true);
-//            delay(1000);
-//            strafe(false);
-//
-//            goForward();
-//            delay(2500\
-//            goStop();
-//            delay(500);
-//
-//            turnLeft();
-//            delay(1500);
-//            goStop();
-//
-//            elbow.setPower(.5);//elbow up?
-//            shoulder.setPower(-.5);//shoulder up
-//            delay(750);
-//            elbow.setPower(0);
-//            shoulder.setPower(0);
-//
-//            leftnom.setPower(-1);//spit out
-//            rightnom.setPower(-1);//spit out
-//            delay(2000);
-//            leftnom.setPower(0);
-//            rightnom.setPower(0);
-
-
-
-
-
-
-
-
-
-//                frontRight = 0;
-//                frontLeft = 0;
-//                backRight = 0;
-//                backLeft = 0;
-//
-//                shoulder.setPower(.5);//shoulder down
-//
-//                shoulder.setPower(-1);//shoulder up
-//
-//                elbow.setPower(.5);//elbow up?
-//
-//                elbow.setPower(-1);//elbow down?
-//
-//                leftnom.setPower(1);//take in
-//                rightnom.setPower(1);//take in
-//
-//                leftnom.setPower(-1);//spit out
-//                rightnom.setPower(-1);//spit out
-//
-//                pullup.setPower(.7);//pullup up?
-//                pullup.setPower(-.7);//pullup down?
+            goLeft();
+            sleep(1800);
+            goStop();
 
             // Send the power variables to the driver.
             telemetry.addData("FR", frontRight);
@@ -193,16 +132,6 @@ public class AutoUPNoDrive extends JackalopeAutoMode {
             telemetry.update();
             idle();
         }
-        // When the op mode is told to stop, stop the motors.
-//        while(isStopRequested()){
-//            FL.setPower(0);
-//            BL.setPower(0);
-//            FR.setPower(0);
-//            BR.setPower(0);
-//            pullup.setPower(0);
-//        }
-
-//    }
 
 
     /*

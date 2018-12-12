@@ -86,47 +86,47 @@ abstract class JackalopeAutoMode extends LinearOpMode {
         }
     }
     public void turnRight(){
-        FL.setPower(.15);
-        BL.setPower(.15);
-        FR.setPower(.15);
-        BR.setPower(.15);
+        FL.setPower(.4);
+        BL.setPower(.4);
+        FR.setPower(.4);
+        BR.setPower(.4);
     }
     public void turnLeft(){
-        FL.setPower(-.15);
-        BL.setPower(-.15);
-        FR.setPower(-.15);
-        BR.setPower(-.15);
+        FL.setPower(-.4);
+        BL.setPower(-.4);
+        FR.setPower(-.4);
+        BR.setPower(-.4);
 
     }
     public void goForward(){
-        FL.setPower(.15);
-        BL.setPower(.15);
-        FR.setPower(-.15);
-        BR.setPower(-.15);
+        FL.setPower(.4);
+        BL.setPower(.4);
+        FR.setPower(-.4);
+        BR.setPower(-.4);
 
     }
 
     public void goRight(){
-        FL.setPower(-.15);
-        BL.setPower(.15);
-        FR.setPower(-.15);
-        BR.setPower(.15);
+        FL.setPower(-.4);
+        BL.setPower(.4);
+        FR.setPower(-.4);
+        BR.setPower(.4);
 
     }
 
     public void goLeft(){
-        FL.setPower(.15);
-        BL.setPower(-.15);
-        FR.setPower(.15);
-        BR.setPower(-.15);
+        FL.setPower(.4);
+        BL.setPower(-.4);
+        FR.setPower(.4);
+        BR.setPower(-.4);
 
     }
 
     public void goBack(){
-        FL.setPower(-.15);
-        BL.setPower(-.15);
-        FR.setPower(.15);
-        BR.setPower(.15);
+        FL.setPower(-.4);
+        BL.setPower(-.4);
+        FR.setPower(.4);
+        BR.setPower(.4);
     }
     public void goStop(){
         FL.setPower(0);
