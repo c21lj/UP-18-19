@@ -17,12 +17,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-@Autonomous(name = "AutoDrive")
+@Autonomous(name = "AutoNoDrive")
 
-public class AutoUP extends JackalopeAutoMode {
+public class autoPullupOnly extends JackalopeAutoMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-//    private CRServo leftnom = null;
+    //    private CRServo leftnom = null;
 //    private CRServo rightnom = null;
     private Servo flipper = null;
     private boolean read = false;
@@ -67,12 +67,6 @@ public class AutoUP extends JackalopeAutoMode {
         pullup.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
     }
 
-    public void delay(int time){
-        double startTime = clock.milliseconds();
-        while((clock.milliseconds() - startTime < time) && !isStopRequested()){
-
-        }
-    }
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -85,6 +79,7 @@ public class AutoUP extends JackalopeAutoMode {
         BR = hardwareMap.get(DcMotor.class, "BR");
         BL = hardwareMap.get(DcMotor.class, "BL");
         pullup = hardwareMap.get(DcMotor.class, "pullup");
+        flipper = hardwareMap.get(Servo.class, "flipper");
 
         // Set the initial directions of the motors
         FL.setDirection(DcMotor.Direction.REVERSE);
@@ -113,98 +108,30 @@ public class AutoUP extends JackalopeAutoMode {
 
             // Loop until the op mode is stopped. changes
             telemetry.addData("read", read);
-            flipper.setPosition(.9);
 
 //            delay(25000);
-            pullup.setPower(.7);//pullup down
+            pullup.setPower(.7);
             telemetry.addData("power", pullup.getPower());
             telemetry.update();
-            delay(8500);
-            pullup.setPower(0);//pullup up?
+            sleep(8100);
+            pullup.setPower(0);
             telemetry.addData("power", pullup.getPower());
             telemetry.update();
             goLeft();
-            delay(4000);
+            sleep(1800);
             goStop();
-            flipper.setPosition(0);
-//            delay(2000);
-//            flipper.setPosition(.2);
-            delay(200000);
 
+            // Send the power variables to the driver.
+            telemetry.addData("FR", frontRight);
+            telemetry.addData("FL", frontLeft);
+            telemetry.addData("BR", backRight);
+            telemetry.addData("BL", backLeft);
 
-//            strafe(true);
-//            delay(1000);
-//            strafe(false);
-//
-//            goForward();
-//            delay(2500\
-//            goStop();
-//            delay(500);
-//
-//            turnLeft();
-//            delay(1500);
-//            goStop();
-//
-//            elbow.setPower(.5);//elbow up?
-//            shoulder.setPower(-.5);//shoulder up
-//            delay(750);
-//            elbow.setPower(0);
-//            shoulder.setPower(0);
-//
-//            leftnom.setPower(-1);//spit out
-//            rightnom.setPower(-1);//spit out
-//            delay(2000);
-//            leftnom.setPower(0);
-//            rightnom.setPower(0);
-
-
-
-
-
-
-
-
-
-//                frontRight = 0;
-//                frontLeft = 0;
-//                backRight = 0;
-//                backLeft = 0;
-//
-//                shoulder.setPower(.5);//shoulder down
-//
-//                shoulder.setPower(-1);//shoulder up
-//
-//                elbow.setPower(.5);//elbow up?
-//
-//                elbow.setPower(-1);//elbow down?
-//
-//                leftnom.setPower(1);//take in
-//                rightnom.setPower(1);//take in
-//
-//                leftnom.setPower(-1);//spit out
-//                rightnom.setPower(-1);//spit out
-//
-//                pullup.setPower(.7);//pullup up?
-//                pullup.setPower(-.7);//pullup down?
-
-        // Send the power variables to the driver.
-        telemetry.addData("FR", frontRight);
-        telemetry.addData("FL", frontLeft);
-        telemetry.addData("BR", backRight);
-        telemetry.addData("BL", backLeft);
-
-        // When the op mode is told to stop, stop the motors.
-        FL.setPower(0);
-        BL.setPower(0);
-        FR.setPower(0);
-        BR.setPower(0);
-        pullup.setPower(0);
-
-        // Set the powers of the motors to the power variables.
-        // Update the displayed values on the driver phone.
-        telemetry.update();
-        idle();
-    }
+            // Set the powers of the motors to the power variables.
+            // Update the displayed values on the driver phone.
+            telemetry.update();
+            idle();
+        }
 
 
     /*

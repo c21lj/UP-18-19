@@ -17,9 +17,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-@Autonomous(name = "AutoNoDrive")
+@Autonomous(name = "FlipperTest")
 
-public class AutoUPNoDrive extends JackalopeAutoMode {
+public class flipperTest extends JackalopeAutoMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
     //    private CRServo leftnom = null;
@@ -67,6 +67,12 @@ public class AutoUPNoDrive extends JackalopeAutoMode {
         pullup.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
     }
 
+    public void delay(int time){
+        double startTime = clock.milliseconds();
+        while((clock.milliseconds() - startTime < time) && !isStopRequested()){
+
+        }
+    }
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -106,32 +112,86 @@ public class AutoUPNoDrive extends JackalopeAutoMode {
         // Wait for the start button to be pressed on the phone.
         waitForStart();
 
-            // Loop until the op mode is stopped. changes
-            telemetry.addData("read", read);
+        // Loop until the op mode is stopped. changes
+        telemetry.addData("read", read);
+        flipper.setPosition(0);
+        sleep(20);
+        flipper.setPosition(.8);
 
-//            delay(25000);
-            pullup.setPower(.7);
-            telemetry.addData("power", pullup.getPower());
-            telemetry.update();
-            sleep(8100);
-            pullup.setPower(0);
-            telemetry.addData("power", pullup.getPower());
-            telemetry.update();
-            goLeft();
-            sleep(1800);
-            goStop();
 
-            // Send the power variables to the driver.
-            telemetry.addData("FR", frontRight);
-            telemetry.addData("FL", frontLeft);
-            telemetry.addData("BR", backRight);
-            telemetry.addData("BL", backLeft);
+//            strafe(true);
+//            delay(1000);
+//            strafe(false);
+//
+//            goForward();
+//            delay(2500\
+//            goStop();
+//            delay(500);
+//
+//            turnLeft();
+//            delay(1500);
+//            goStop();
+//
+//            elbow.setPower(.5);//elbow up?
+//            shoulder.setPower(-.5);//shoulder up
+//            delay(750);
+//            elbow.setPower(0);
+//            shoulder.setPower(0);
+//
+//            leftnom.setPower(-1);//spit out
+//            rightnom.setPower(-1);//spit out
+//            delay(2000);
+//            leftnom.setPower(0);
+//            rightnom.setPower(0);
 
-            // Set the powers of the motors to the power variables.
-            // Update the displayed values on the driver phone.
-            telemetry.update();
-            idle();
-        }
+
+
+
+
+
+
+
+
+//                frontRight = 0;
+//                frontLeft = 0;
+//                backRight = 0;
+//                backLeft = 0;
+//
+//                shoulder.setPower(.5);//shoulder down
+//
+//                shoulder.setPower(-1);//shoulder up
+//
+//                elbow.setPower(.5);//elbow up?
+//
+//                elbow.setPower(-1);//elbow down?
+//
+//                leftnom.setPower(1);//take in
+//                rightnom.setPower(1);//take in
+//
+//                leftnom.setPower(-1);//spit out
+//                rightnom.setPower(-1);//spit out
+//
+//                pullup.setPower(.7);//pullup up?
+//                pullup.setPower(-.7);//pullup down?
+
+        // Send the power variables to the driver.
+        telemetry.addData("FR", frontRight);
+        telemetry.addData("FL", frontLeft);
+        telemetry.addData("BR", backRight);
+        telemetry.addData("BL", backLeft);
+
+        // When the op mode is told to stop, stop the motors.
+        FL.setPower(0);
+        BL.setPower(0);
+        FR.setPower(0);
+        BR.setPower(0);
+        pullup.setPower(0);
+
+        // Set the powers of the motors to the power variables.
+        // Update the displayed values on the driver phone.
+        telemetry.update();
+        idle();
+    }
 
 
     /*
@@ -145,4 +205,5 @@ public class AutoUPNoDrive extends JackalopeAutoMode {
     }
 
 }
+
 

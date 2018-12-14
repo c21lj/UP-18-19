@@ -190,14 +190,14 @@ public class OmniDrive extends JackalopeOpMode {
                 rightRotate.setPosition(.5);
       }
             else {
-                rightRotate.setPosition(.08);
+                rightRotate.setPosition(.028);
 
             }
 
             //nom (make it go in and out):
-            if (righttrigger>.2) {
+            if (lefttrigger>.2) {
                 nom.setPower(1);
-            } else if (lefttrigger>.2) {
+            } else if (righttrigger>.2) {
                 nom.setPower(-1);
             } else {
                 nom.setPower(0);
@@ -205,9 +205,9 @@ public class OmniDrive extends JackalopeOpMode {
             }
 
             //pullup mechanism (make it go up and down):
-            if (abutton) {
+            if (ybutton) {
                 pullup.setPower(.7);
-            } else if (ybutton) {
+            } else if (abutton) {
                 pullup.setPower(-.7);
             } else {
                 pullup.setPower(0);
