@@ -20,7 +20,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 @Autonomous(name = "AutoMarker")
 
 public class AutoDriveStraight extends JackalopeAutoMode {
-    // Declare OpMode members.
+    // Declare OpMode members
     private ElapsedTime runtime = new ElapsedTime();
 //    private CRServo leftnom = null;
 //    private CRServo rightnom = null;
