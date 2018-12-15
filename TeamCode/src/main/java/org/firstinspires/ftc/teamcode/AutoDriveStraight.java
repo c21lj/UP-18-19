@@ -17,7 +17,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-@Autonomous(name = "AutoDrive")
+@Autonomous(name = "AutoMarker")
 
 public class AutoDriveStraight extends JackalopeAutoMode {
     // Declare OpMode members.
@@ -126,8 +126,11 @@ public class AutoDriveStraight extends JackalopeAutoMode {
             telemetry.update();
             goLeft();
             sleep(3000);
-            flipper.setPosition(.8);
             goStop();
+            flipper.setPosition(1);
+            sleep (2000);
+            flipper.setPosition(0);
+            sleep (2000);
 
 
 //            strafe(true);

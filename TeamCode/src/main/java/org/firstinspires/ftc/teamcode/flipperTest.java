@@ -115,8 +115,11 @@ public class flipperTest extends JackalopeAutoMode {
         // Loop until the op mode is stopped. changes
         telemetry.addData("read", read);
         flipper.setPosition(0);
-        sleep(20);
-        flipper.setPosition(.8);
+        sleep(2000);
+        flipper.setPosition(1);
+        sleep (2000);
+        flipper.setPosition(0);
+        sleep (2000);
 
 
 //            strafe(true);
