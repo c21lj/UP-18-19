@@ -113,12 +113,12 @@ public class autoPullupOnly extends JackalopeAutoMode {
             pullup.setPower(.7);
             telemetry.addData("power", pullup.getPower());
             telemetry.update();
-            sleep(8100);
+            sleep(8600);
             pullup.setPower(0);
             telemetry.addData("power", pullup.getPower());
             telemetry.update();
             goLeft();
-            sleep(1800);
+            sleep(1500);
             goStop();
 
             // Send the power variables to the driver.

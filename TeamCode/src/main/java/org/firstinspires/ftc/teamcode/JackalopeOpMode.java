@@ -108,17 +108,17 @@ DcMotor FR = null;
 
     }
     public void goForward(){
-        FL.setPower(.6);
-        BL.setPower(.6);
-        FR.setPower(-.6);
-        BR.setPower(-.6);
+        FL.setPower(.65);
+        BL.setPower(.65);
+        FR.setPower(-.65);
+        BR.setPower(-.65);
 
     }
     public void goBack(){
-        FL.setPower(-.6);
-        BL.setPower(-.6);
-        FR.setPower(.6);
-        BR.setPower(.6);
+        FL.setPower(-.65);
+        BL.setPower(-.65);
+        FR.setPower(.65);
+        BR.setPower(.65);
     }
     public void goStop(){
         FL.setPower(0);

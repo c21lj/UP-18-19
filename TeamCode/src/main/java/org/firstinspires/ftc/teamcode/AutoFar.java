@@ -17,12 +17,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-@Autonomous(name = "AutoMarker")
+@Autonomous(name = "AutoFar")
 
-public class AutoDriveStraight extends JackalopeAutoMode {
+public class AutoFar extends JackalopeAutoMode {
     // Declare OpMode members
     private ElapsedTime runtime = new ElapsedTime();
-//    private CRServo leftnom = null;
+    //    private CRServo leftnom = null;
 //    private CRServo rightnom = null;
     private Servo flipper = null;
     private boolean read = false;
@@ -112,28 +112,28 @@ public class AutoDriveStraight extends JackalopeAutoMode {
         // Wait for the start button to be pressed on the phone.
         waitForStart();
 
-            // Loop until the op mode is stopped. changes
-            telemetry.addData("read", read);
-            flipper.setPosition(0);
+        // Loop until the op mode is stopped. changes
+        telemetry.addData("read", read);
+        flipper.setPosition(0);
 
 //            delay(25000);
-            pullup.setPower(.7);
-            telemetry.addData("power", pullup.getPower());
-            telemetry.update();
-            sleep(8600);
-            pullup.setPower(0);
-            telemetry.addData("power", pullup.getPower());
-            telemetry.update();
-            goLeft();
-            sleep(3200);
-            goStop();
-            turnLeft();
-            sleep(400);
-            goStop();
-            flipper.setPosition(1);
-            sleep (2000);
-            flipper.setPosition(0);
-            sleep (2000);
+        pullup.setPower(.7);
+        telemetry.addData("power", pullup.getPower());
+        telemetry.update();
+        sleep(8600);
+        pullup.setPower(0);
+        telemetry.addData("power", pullup.getPower());
+        telemetry.update();
+        goLeft();
+        sleep(2500);
+        goBack();
+        sleep(500);
+        turnRight();
+        sleep(300);
+        flipper.setPosition(1);
+        sleep (2000);
+        flipper.setPosition(0);
+        sleep (2000);
 
 
 //            strafe(true);
