@@ -146,6 +146,9 @@ public class VuforiaNavRoverRuckus extends LinearOpMode {
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
 
         // Load the data sets that for the trackable objects. These particular data sets are stored in the 'assets' part of our application.
+
+        //VuforiaTrackables
+
         VuforiaTrackables targetsRoverRuckus = this.vuforia.loadTrackablesFromAsset("RoverRuckus");
         VuforiaTrackable blueRover = targetsRoverRuckus.get(0);
         blueRover.setName("Blue-Rover");
@@ -272,6 +275,8 @@ public class VuforiaNavRoverRuckus extends LinearOpMode {
         /** Start tracking the data sets we care about. */
         targetsRoverRuckus.activate();
         while (opModeIsActive()) {
+
+            //First scan for the cube
 
             // check all the trackable target to see which one (if any) is visible.
             targetVisible = false;
