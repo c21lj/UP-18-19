@@ -147,7 +147,7 @@ public class VuforiaNavigationWebcam extends LinearOpMode {
          * Once you've obtained a license key, copy the string from the Vuforia web site
          * and paste it in to your code on the next line, between the double quotes.
          */
-        parameters.vuforiaLicenseKey = " -- YOUR NEW VUFORIA KEY GOES HERE  --- ";
+        parameters.vuforiaLicenseKey = "Ad/AEXP/////AAABmbjNb+sAPklIoXiSQpBY/TFvYPhtFcz1ekLBu9FLErFqYz1XRXmNF8TJGJqtGMLa5uqOlmUYVPJDrAtrVCxxPJhUsasJnEGAZo/BH49uKmozVZxRivcZoqLJPODK5B0DVyczB+LhIoIL0gbtnSJpstbxxzIcSA/qDiQH8I3crYC4rvov/tB8qG0UD6rBoF1tG15DGutkjyFyhAK9IWgwihaXGKu9yTmco5XOQ5EIK9LiRfbOA2261mwi6McK/fFHoAKmjJ+1S15m9oqYhoIxLmOWyMEzkMX8bFJCBba6x7xDGq3hJ3KZHA5EY8tCmaxj0JDtmwLcdYB8M/tnu/4dIVCtsXyP+6v1UAkclTWd5fNh";
 
         /**
          * We also indicate which camera on the RC we wish to use.
@@ -178,16 +178,20 @@ public class VuforiaNavigationWebcam extends LinearOpMode {
          * example "StonesAndChips", datasets can be found in in this project in the
          * documentation directory.
          */
-        VuforiaTrackables stonesAndChips = vuforia.loadTrackablesFromAsset("StonesAndChips");
-        VuforiaTrackable redTarget = stonesAndChips.get(0);
-        redTarget.setName("RedTarget");  // Stones
+        VuforiaTrackables targetsRoverRuckus = this.vuforia.loadTrackablesFromAsset("RoverRuckus");
+        VuforiaTrackable blueRover = targetsRoverRuckus.get(0);
+        blueRover.setName("Blue-Rover");
+        VuforiaTrackable redFootprint = targetsRoverRuckus.get(1);
+        redFootprint.setName("Red-Footprint");
+        VuforiaTrackable frontCraters = targetsRoverRuckus.get(2);
+        frontCraters.setName("Front-Craters");
+        VuforiaTrackable backSpace = targetsRoverRuckus.get(3);
+        backSpace.setName("Back-Space");
 
-        VuforiaTrackable blueTarget  = stonesAndChips.get(1);
-        blueTarget.setName("BlueTarget");  // Chips
 
         /** For convenience, gather together all the trackable objects in one easily-iterable collection */
         List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
-        allTrackables.addAll(stonesAndChips);
+        allTrackables.addAll(targetsRoverRuckus);
 
         /**
          * We use units of mm here because that's the recommended units of measurement for the
@@ -265,7 +269,7 @@ public class VuforiaNavigationWebcam extends LinearOpMode {
                         /* First, in the fixed (field) coordinate system, we rotate 90deg in X, then 90 in Z */
                         AxesReference.EXTRINSIC, AxesOrder.XZX,
                         AngleUnit.DEGREES, 90, 90, 0));
-        redTarget.setLocationFtcFieldFromTarget(redTargetLocationOnField);
+        //.setLocationFtcFieldFromTarget(redTargetLocationOnField);
         RobotLog.ii(TAG, "Red Target=%s", format(redTargetLocationOnField));
 
        /*
@@ -281,7 +285,7 @@ public class VuforiaNavigationWebcam extends LinearOpMode {
                         /* First, in the fixed (field) coordinate system, we rotate 90deg in X */
                         AxesReference.EXTRINSIC, AxesOrder.XZX,
                         AngleUnit.DEGREES, 90, 0, 0));
-        blueTarget.setLocationFtcFieldFromTarget(blueTargetLocationOnField);
+        //.setLocationFtcFieldFromTarget(blueTargetLocationOnField);
         RobotLog.ii(TAG, "Blue Target=%s", format(blueTargetLocationOnField));
 
         /**
@@ -355,8 +359,8 @@ public class VuforiaNavigationWebcam extends LinearOpMode {
          * listener is a {@link VuforiaTrackableDefaultListener} and can so safely cast because
          * we have not ourselves installed a listener of a different type.
          */
-        ((VuforiaTrackableDefaultListener)redTarget.getListener()).setCameraLocationOnRobot(parameters.cameraName, robotFromCamera);
-        ((VuforiaTrackableDefaultListener)blueTarget.getListener()).setCameraLocationOnRobot(parameters.cameraName, robotFromCamera);
+        ((VuforiaTrackableDefaultListener)//.getListener()).setCameraLocationOnRobot(parameters.cameraName, robotFromCamera);
+        ((VuforiaTrackableDefaultListener)//blueTarget.getListener()).setCameraLocationOnRobot(parameters.cameraName, robotFromCamera);
 
         /**
          * A brief tutorial: here's how all the math is going to work:
@@ -383,7 +387,7 @@ public class VuforiaNavigationWebcam extends LinearOpMode {
         waitForStart();
 
         /** Start tracking the data sets we care about. */
-        stonesAndChips.activate();
+        //stonesAndChips.activate();
 
         boolean buttonPressed = false;
         while (opModeIsActive()) {
