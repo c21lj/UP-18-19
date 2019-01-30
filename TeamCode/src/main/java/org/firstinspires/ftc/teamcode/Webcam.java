@@ -30,10 +30,13 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import java.util.List;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -53,12 +56,25 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
      * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
      * is explained below.
      */
-    @TeleOp(name = "Webcam", group = "Concept")
+    @Autonomous(name = "Webcam", group = "Concept")
 
-    public class Webcam extends JackalopeOpMode {
+    public class Webcam extends JackalopeAutoMode {
         private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
         private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
         private static final String LABEL_SILVER_MINERAL = "Silver Mineral";
+
+        public void strafe(boolean strafe) {
+            FR.setDirection(strafe ? DcMotor.Direction.FORWARD : DcMotor.Direction.REVERSE);
+            FL.setDirection(strafe ? DcMotor.Direction.FORWARD : DcMotor.Direction.FORWARD);
+            BR.setDirection(strafe ? DcMotor.Direction.REVERSE : DcMotor.Direction.REVERSE);
+            BL.setDirection(strafe ? DcMotor.Direction.REVERSE : DcMotor.Direction.FORWARD);
+            FR.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
+            FL.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
+            BR.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
+            BL.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
+            pullup.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
+        }
+
 
         /*
          * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
@@ -87,13 +103,37 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
         private TFObjectDetector tfod;
 
         @Override
-        public void runOpMode() {
+        public void runOpMode() throws InterruptedException {
             telemetry.addData("Here", "You have reached this point");
             string = hardwareMap.get(DcMotor.class, "string");
             string.setDirection(DcMotor.Direction.REVERSE);
             // The TFObjectDetector uses the camera frames from the VuforiaLocalizer, so we create that
             // first.
             initVuforia();
+
+            FR = hardwareMap.get(DcMotor.class, "FR");
+            FL = hardwareMap.get(DcMotor.class, "FL");
+            BR = hardwareMap.get(DcMotor.class, "BR");
+            BL = hardwareMap.get(DcMotor.class, "BL");
+            pullup = hardwareMap.get(DcMotor.class, "pullup");
+
+            // Set the initial directions of the motors
+            FL.setDirection(DcMotor.Direction.REVERSE);
+            BL.setDirection(DcMotor.Direction.REVERSE);
+            BR.setDirection(DcMotor.Direction.REVERSE);
+            FR.setDirection(DcMotor.Direction.REVERSE);
+            pullup.setDirection(DcMotorSimple.Direction.FORWARD);
+
+            // Set the behaviour when motors' power is set to zero -- whether to brake
+            FR.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
+            FL.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
+            BR.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
+            BL.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
+            pullup.setDirection(DcMotorSimple.Direction.FORWARD);
+
+            // Wait for the start button to be pressed on the phone.
+            waitForStart();
+            //see if this works
 
             if (ClassFactory.getInstance().canCreateTFObjectDetector()) {
                 initTfod();
@@ -106,7 +146,8 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
             telemetry.update();
             waitForStart();
 
-            if (opModeIsActive()) {
+//            if (opModeIsActive()) {
+
                 /** Activate Tensor Flow Object Detection. */
                 if (tfod != null) {
                     tfod.activate();
@@ -126,7 +167,10 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
                                 for (Recognition recognition : updatedRecognitions) {
                                     if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
                                         goldMineralX = (int) recognition.getLeft();
-                                        string.setPower(.5);
+//                                        string.setPower(.5);
+                                        goLeft();
+                                        sleep(500);
+                                        goStop();
                                     } else if (silverMineral1X == -1) {
                                         silverMineral1X = (int) recognition.getLeft();
                                         string.setPower(-.5);
@@ -149,7 +193,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
                         }
                     }
                 }
-            }
+//            }
 
             if (tfod != null) {
                 tfod.shutdown();
