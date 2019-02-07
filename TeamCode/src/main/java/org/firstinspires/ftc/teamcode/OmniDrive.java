@@ -185,12 +185,16 @@ public class OmniDrive extends JackalopeOpMode {
             }
 
             if (rightbumper) {
-               rightRotate.setPosition(.9);
+               rightRotate.setPosition(.5);
+//               leftRotate.setPosition(.5);
            }  else if (leftbumper) {
-                rightRotate.setPosition(.5);
+                rightRotate.setPosition(.01);
+//                leftRotate.setPosition(.9);
       }
             else {
-                rightRotate.setPosition(.18);
+                rightRotate.setPosition(.9);
+//                leftRotate.setPosition(.01);
+
 
             }
 
@@ -198,7 +202,7 @@ public class OmniDrive extends JackalopeOpMode {
             if (lefttrigger>.2) {
                 nom.setPower(1);
             } else if (righttrigger>.2) {
-                nom.setPower(-1);
+                nom.setPower(-.7);
             } else {
                 nom.setPower(0);
 

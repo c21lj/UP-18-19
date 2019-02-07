@@ -167,7 +167,6 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
                                 for (Recognition recognition : updatedRecognitions) {
                                     if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
                                         goldMineralX = (int) recognition.getLeft();
-//                                        string.setPower(.5);
                                         goLeft();
                                         sleep(500);
                                         goStop();
