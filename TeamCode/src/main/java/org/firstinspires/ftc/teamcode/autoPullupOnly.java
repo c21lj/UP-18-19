@@ -24,6 +24,7 @@ public class autoPullupOnly extends JackalopeAutoMode {
     private ElapsedTime runtime = new ElapsedTime();
     private Servo flipper = null;
     private boolean read = false;
+    private DcMotor pullupEncoder;
     private ColorSensor CBL;
     private boolean gripped = false;
     private boolean lifted = false;
@@ -71,6 +72,7 @@ public class autoPullupOnly extends JackalopeAutoMode {
         BR = hardwareMap.get(DcMotor.class, "BR");
         BL = hardwareMap.get(DcMotor.class, "BL");
         pullup = hardwareMap.get(DcMotor.class, "pullup");
+//        pullupEncoder = hardwareMap.get(DcMotor.class, "string");
 
         // Set the initial directions of the motors
         FL.setDirection(DcMotor.Direction.REVERSE);
@@ -124,9 +126,10 @@ public class autoPullupOnly extends JackalopeAutoMode {
 //                pullup.setPower(-7);
 //            }
 
-        if (5*TICKS > pullup.getCurrentPosition()) {
+        while (5*TICKS > pullup.getCurrentPosition() && opModeIsActive()) {
             pullup.setPower(-.9);
             telemetry.addData("current position", pullup.getCurrentPosition());
+            telemetry.update();
 
         }
 
@@ -134,10 +137,7 @@ public class autoPullupOnly extends JackalopeAutoMode {
 //            pullup.setPower(.9);
 //            telemetry.addData("current position", pullup.getCurrentPosition());
 //        }
-
-        else {
             pullup.setPower(0);
-        }
 
 //        else {
 //            pullup.setPower(0);
