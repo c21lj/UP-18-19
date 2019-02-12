@@ -185,42 +185,52 @@ public class OmniDrive extends JackalopeOpMode {
             }
 
             if (rightbumper) {
-               rightRotate.setPosition(.5);
-//               leftRotate.setPosition(.5);
-           }  else if (leftbumper) {
-                rightRotate.setPosition(.01);
-//                leftRotate.setPosition(.9);
+               rightRotate.setPosition(.8);
+               leftRotate.setPosition(.8);
       }
-            else {
-                rightRotate.setPosition(.9);
-//                leftRotate.setPosition(.01);
+            if (leftbumper) {
+                rightRotate.setPosition(.015);
+                leftRotate.setPosition(.015);
+            }
 
+            if(bbutton) {
+                rightRotate.setPosition(0.4);
+                leftRotate.setPosition(.04);
 
             }
 
             //nom (make it go in and out):
-            if (lefttrigger>.2) {
-                nom.setPower(1);
-            } else if (righttrigger>.2) {
+//            if (righttrigger>.2) {
+//                nom.setPower(.7);
+//            } else if (lefttrigger>.2) {
+//                nom.setPower(-1);
+//            } else {
+//                nom.setPower(0);
+//
+//            }
+
+            if (righttrigger>.2) {
                 nom.setPower(-.7);
+            } else if (lefttrigger>.2) {
+                nom.setPower(1);
             } else {
                 nom.setPower(0);
 
             }
 
             //pullup mechanism (make it go up and down):
-            if (ybutton) {
+            if (gamepad2DpadUp) {
                 pullup.setPower(.7);
-            } else if (abutton) {
+            } else if (gamepad2DpadDown) {
                 pullup.setPower(-.7);
             } else {
                 pullup.setPower(0);
             }
 
             //string
-            if (gamepad2DpadDown) {
+            if (abutton) {
                 string.setPower(.8);
-            } else if (gamepad2DpadUp) {
+            } else if (ybutton) {
                 string.setPower(-.8);
             } else {
                 string.setPower(0);
@@ -241,11 +251,17 @@ public class OmniDrive extends JackalopeOpMode {
             telemetry.addData("BR", backRight);
             telemetry.addData("BL", backLeft);
 
-            // Set the powers of the motors to the power variables.
-            FR.setPower(frontRight);
-            FL.setPower(frontLeft);
-            BR.setPower(backRight);
-            BL.setPower(backLeft);
+//            // Set the powers of the motors to the power variables.
+//            FR.setPower(frontRight);
+//            FL.setPower(frontLeft);
+//            BR.setPower(backRight);
+//            BL.setPower(backLeft);
+
+            //new driving directions:
+            FR.setPower(backLeft);
+            FL.setPower(backRight);
+            BR.setPower(frontLeft);
+            BL.setPower(frontRight);
             // Update the displayed values on the driver phone.
             telemetry.update();
             idle();
