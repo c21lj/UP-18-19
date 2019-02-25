@@ -65,20 +65,7 @@ abstract class JackalopeAutoMode extends LinearOpMode {
         BL.setDirection(strafe ? DcMotor.Direction.REVERSE : DcMotor.Direction.FORWARD);
 
     }
-    public double getAngleDiff(double angle1, double angle2) {
-        if(Math.abs(angle1 - angle2) < 180.0)
-            return Math.abs(angle1-angle2);
-        else if(angle1 > angle2)
-        {
-            angle1 -= 360;
-            return Math.abs(angle2-angle1);
-        }
-        else
-        {
-            angle2 -= 360;
-            return Math.abs(angle1-angle2);
-        }
-    }
+
     public void delay(int time){
         double startTime = clock.milliseconds();
         while((clock.milliseconds() - startTime < time) && !isStopRequested()){
@@ -98,11 +85,12 @@ abstract class JackalopeAutoMode extends LinearOpMode {
         BR.setPower(-.4);
 
     }
+
     public void goForward(){
-        FL.setPower(.4);
+        FL.setPower(.8);
         BL.setPower(.4);
         FR.setPower(-.4);
-        BR.setPower(-.4);
+        BR.setPower(-.8);
 
     }
 
@@ -116,8 +104,8 @@ abstract class JackalopeAutoMode extends LinearOpMode {
 
     public void goLeft(){
         FL.setPower(.4);
-        BL.setPower(-.4);
-        FR.setPower(.4);
+        BL.setPower(-.8);
+        FR.setPower(.8);
         BR.setPower(-.4);
 
     }

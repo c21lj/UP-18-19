@@ -185,17 +185,17 @@ public class OmniDrive extends JackalopeOpMode {
             }
 
             if (rightbumper) {
-               rightRotate.setPosition(.8);
-               leftRotate.setPosition(.8);
+               rightRotate.setPosition(.88);
+               leftRotate.setPosition(.88);
       }
             if (leftbumper) {
-                rightRotate.setPosition(.015);
-                leftRotate.setPosition(.015);
+                rightRotate.setPosition(.03);
+                leftRotate.setPosition(.03);
             }
 
             if(bbutton) {
-                rightRotate.setPosition(0.4);
-                leftRotate.setPosition(.04);
+                rightRotate.setPosition(.4);
+                leftRotate.setPosition(.4);
 
             }
 
@@ -210,9 +210,9 @@ public class OmniDrive extends JackalopeOpMode {
 //            }
 
             if (righttrigger>.2) {
-                nom.setPower(-.7);
-            } else if (lefttrigger>.2) {
                 nom.setPower(1);
+            } else if (lefttrigger>.2) {
+                nom.setPower(-.8);
             } else {
                 nom.setPower(0);
 
@@ -262,6 +262,7 @@ public class OmniDrive extends JackalopeOpMode {
             FL.setPower(backRight);
             BR.setPower(frontLeft);
             BL.setPower(frontRight);
+
             // Update the displayed values on the driver phone.
             telemetry.update();
             idle();

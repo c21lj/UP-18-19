@@ -167,15 +167,14 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
                                 for (Recognition recognition : updatedRecognitions) {
                                     if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
                                         goldMineralX = (int) recognition.getLeft();
-                                        goLeft();
-                                        sleep(500);
-                                        goStop();
+//                                        goLeft();
+//                                        sleep(500);
+//                                        goStop();
                                     } else if (silverMineral1X == -1) {
                                         silverMineral1X = (int) recognition.getLeft();
-                                        string.setPower(-.5);
+
                                     } else {
                                         silverMineral2X = (int) recognition.getLeft();
-                                        string.setPower(.2);
                                     }
                                 }
                                 if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
