@@ -74,20 +74,7 @@ DcMotor FR = null;
         BL.setDirection(strafe ? DcMotor.Direction.REVERSE : DcMotor.Direction.FORWARD);
 
     }
-    public double getAngleDiff(double angle1, double angle2) {
-        if(Math.abs(angle1 - angle2) < 180.0)
-            return Math.abs(angle1-angle2);
-        else if(angle1 > angle2)
-        {
-            angle1 -= 360;
-            return Math.abs(angle2-angle1);
-        }
-        else
-        {
-            angle2 -= 360;
-            return Math.abs(angle1-angle2);
-        }
-    }
+
     public void delay(int time){
         double startTime = clock.milliseconds();
         while((clock.milliseconds() - startTime < time) && !isStopRequested()){
@@ -95,30 +82,30 @@ DcMotor FR = null;
         }
     }
     public void turnRight(){
-        FL.setPower(.3);
-        BL.setPower(.3);
-        FR.setPower(.3);
-        BR.setPower(.3);
+        FL.setPower(.4);
+        BL.setPower(.4);
+        FR.setPower(.4);
+        BR.setPower(.4);
     }
     public void turnLeft(){
-        FL.setPower(-.3);
-        BL.setPower(-.3);
-        FR.setPower(-.3);
-        BR.setPower(-.3);
+        FL.setPower(-.4);
+        BL.setPower(-.4);
+        FR.setPower(-.4);
+        BR.setPower(-.4);
 
     }
     public void goForward(){
-        FL.setPower(.65);
-        BL.setPower(.65);
-        FR.setPower(-.65);
-        BR.setPower(-.65);
+        FL.setPower(.7);
+        BL.setPower(.7);
+        FR.setPower(-.7);
+        BR.setPower(-.7);
 
     }
     public void goBack(){
-        FL.setPower(-.65);
-        BL.setPower(-.65);
-        FR.setPower(.65);
-        BR.setPower(.65);
+        FL.setPower(-.7);
+        BL.setPower(-.7);
+        FR.setPower(.7);
+        BR.setPower(.7);
     }
     public void goStop(){
         FL.setPower(0);
