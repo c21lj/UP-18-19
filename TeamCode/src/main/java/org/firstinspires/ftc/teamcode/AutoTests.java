@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 //UP!!
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -22,6 +23,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
+import java.util.Iterator;
 import java.util.List;
 
 @Autonomous(name = "NJ Marker")
@@ -67,6 +69,7 @@ public class AutoTests extends JackalopeAutoMode {
      * Detection engine.
      */
     private TFObjectDetector tfod;
+    private VuforiaInterop vf;
 
     @Override
     public void strafe(boolean strafe) {
@@ -118,13 +121,18 @@ public class AutoTests extends JackalopeAutoMode {
         // Reset the timer to zero.
         runtime.reset();
 
+        // Initialize vuforia
+        vf = new VuforiaInterop(telemetry, hardwareMap);
+        vf.init();
+
         // Wait for the start button to be pressed on the phone.
         waitForStart();
 
         flipper.setPosition(.01);
 
         pullup.setPower(-1);
-        pullup.setTargetPosition(pullup.getCurrentPosition() - 21500);
+//        pullup.setTargetPosition(pullup.getCurrentPosition() - 21500);
+        pullup.setTargetPosition(pullup.getCurrentPosition() - 19500);
 
         while (pullup.getTargetPosition() + 50 < pullup.getCurrentPosition() && opModeIsActive()) {
             telemetry.addData("current position", pullup.getCurrentPosition());
@@ -138,18 +146,243 @@ public class AutoTests extends JackalopeAutoMode {
         telemetry.update();
         goForward();
         sleep(500);
+
+        goStop();//
+        sleep(1000);//
+
         goBack();
         sleep(500);
 
-        goLeft();
-        sleep(2000);
-        flipper.setPosition(.90);
-
         goStop();
-        sleep(2000);
+//        sleep(1000); //
+
+//        goLeft();
+//        sleep(2000);
+//        flipper.setPosition(.90);
+
+        // Wait for a few seconds to allow detection to settle
+        sleep((long) (INITIAL_DETECTION_DELAY_SECONDS * 1000));
+
+        MineralLocation mineralLocation = null;
+
+        // The number of times detection has been attempted
+        int attempts = 0;
+        telemetry.addData("Detection attempts", attempts);
+
+        telemetry.addData("Detection status", "Detecting");
         telemetry.update();
-        idle();
+
+        if (vf.tfod != null) {
+            vf.tfod.activate();
+
+            // Try to detect the gold mineral until a conclusion is reached
+            while (opModeIsActive() && mineralLocation == null && attempts <= MAX_DETECTION_ATTEMPTS) {
+                mineralLocation = sample();
+                attempts++;
+                telemetry.addData("Detection attempts:", attempts);
+                telemetry.update();
+
+                // Wait for some time to allow a result to be reached
+                sleep((long) (INITIAL_DETECTION_DELAY_SECONDS * 1000));
+            }
+
+            // Drive in different directions depending on the location of the gold mineral
+            if (mineralLocation == MineralLocation.LEFT) {
+                telemetry.addData("Detection status", "Success: Left");
+                telemetry.update();
+                pushLeft();
+            } else if (mineralLocation == MineralLocation.CENTER) {
+                telemetry.addData("Detection status", "Success: Center");
+                telemetry.update();
+                pushCenter();
+            } else if (mineralLocation == MineralLocation.RIGHT) {
+                telemetry.addData("Detection status", "Success: Right");
+                telemetry.update();
+                pushRight();
+            } else {
+                // If nothing was detected, default to going left
+                telemetry.addData("Detection status", "Failure (default Left)");
+                telemetry.update();
+                pushLeft();
+            }
+        } else {
+            // If tfod fails to activate, default to going right
+            telemetry.addData("Detection status", "Failure");
+            telemetry.update();
+            pushRight();
+        }
+
+//        goStop();
+        telemetry.update();
+        sleep(100000);
+        telemetry.update();
+//        idle();
 
     }
+
+    /**
+     * Copied from General 2-28-19
+     * Use TFOD to detect the location of the gold mineral
+     *
+     * @return The location of the gold mineral, or null if could not detect
+     */
+    private MineralLocation sample() {
+        // Get a list of recognized objects
+        List<Recognition> updatedRecognitions = vf.tfod.getUpdatedRecognitions();
+
+        if (updatedRecognitions != null) {
+
+            // Get the number of recognized objects
+            final int numRecognitions = updatedRecognitions.size();
+            telemetry.addData("# Objects Detected", numRecognitions);
+            telemetry.update();
+
+            float goldMineralX = 0;
+            float silverMineral1X = 0;
+            float silverMineral2X = 0;
+
+            boolean goldFound = false;
+            boolean silver1Found = false;
+            boolean silver2Found = false;
+
+            // Check how many minerals were recognized
+            if (numRecognitions == 3) {
+                // If three minerals were detected, find the x and type (gold or silver) of each
+                for (Recognition recognition : updatedRecognitions) {
+                    if (recognition.getLabel().equals(LABEL_GOLD_MINERAL) && !goldFound) {
+                        goldMineralX = recognition.getLeft();
+                        goldFound = true;
+                    } else if (recognition.getLabel().equals(LABEL_SILVER_MINERAL) && !silver1Found) {
+                        silverMineral1X = recognition.getLeft();
+                        silver1Found = true;
+                    } else if (recognition.getLabel().equals(LABEL_SILVER_MINERAL) && !silver2Found) {
+                        silverMineral2X = recognition.getLeft();
+                        silver2Found = true;
+                    }
+                }
+
+                // Check if 1 gold and two silver minerals were found; if not, return null
+                if (goldFound && silver1Found && silver2Found) {
+                    // If gold is to the left of both silvers, return LEFT.
+                    // If gold is to the right of both silvers, return RIGHT.
+                    // Otherwise, return CENTER.
+                    if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
+                        return MineralLocation.LEFT;
+                    } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
+                        return MineralLocation.RIGHT;
+                    } else {
+                        return MineralLocation.CENTER;
+                    }
+                } else {
+                    return null;
+                }
+            } else if (numRecognitions == 2) {
+                // If two minerals were recognized, assume that the two minerals seen are the left two
+                // Get each recognition.
+                Recognition recognition1 = updatedRecognitions.get(0);
+                Recognition recognition2 = updatedRecognitions.get(1);
+
+                // Mineral types: false: silver, true: gold
+                boolean isGold1;
+                boolean isGold2;
+
+                // Figure out whether mineral 1 is gold or silver
+                if (recognition1.getLabel().equals(LABEL_GOLD_MINERAL)) {
+                    isGold1 = true;
+                } else {
+                    isGold1 = false;
+                }
+
+                // Figure out whether mineral 2 is gold or silver
+                if (recognition2.getLabel().equals(LABEL_GOLD_MINERAL)) {
+                    isGold2 = true;
+                } else {
+                    isGold2 = false;
+                }
+
+                // If neither mineral is gold, then return RIGHT, since the other mineral is the gold one
+                // If both are gold, return null (this represents failure)
+                if (!isGold1 && !isGold2) {
+                    return MineralLocation.RIGHT;
+//                    return MineralLocation.LEFT;
+                } else if (isGold1 && isGold2) {
+                    return null;
+                } else {
+                    // If one is gold and the other is silver, figure out if gold is to the right or left of the silver
+                    if (isGold1) {
+                        if (recognition1.getLeft() < recognition2.getLeft()) {
+                            return MineralLocation.LEFT;
+//                            return MineralLocation.CENTER;
+                        } else {
+                            return MineralLocation.CENTER;
+//                            return MineralLocation.RIGHT;
+                        }
+                    } else {
+                        if (recognition2.getLeft() < recognition1.getLeft()) {
+                            return MineralLocation.LEFT;
+//                            return MineralLocation.CENTER;
+                        } else {
+                            return MineralLocation.CENTER;
+//                            return MineralLocation.RIGHT;
+                        }
+                    }
+                }
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Drive to and displace the left mineral
+     */
+    private void pushLeft() {
+        goForward();
+        sleep(250);
+        goStop();
+        sleep(250);
+        goRight();
+        sleep(1000);
+        goStop();
+    }
+
+    /**
+     * Drive to and displace the left mineral
+     */
+    private void pushCenter() {
+        goBack();
+        sleep(250);
+        goStop();
+        sleep(250);
+        goRight();
+        sleep(1000);
+        goStop();
+    }
+
+    /**
+     * Drive to and displace the left mineral
+     */
+    private void pushRight() {
+        goBack();
+        sleep(1300);
+        goStop();
+        sleep(250);
+        goRight();
+        sleep(1600);
+        goStop();
+    }
+
+    // VUFORIA DETECTION CONSTANTS
+    public static final int MAX_DETECTION_ATTEMPTS = 8;
+    public static final double INITIAL_DETECTION_DELAY_SECONDS = 3;
+    public static final double DETECTION_DELAY_SECONDS = .75;
 }
 
+/**
+ * Represents the location of the gold mineral
+ */
+enum MineralLocation {
+    LEFT, CENTER, RIGHT
+}
