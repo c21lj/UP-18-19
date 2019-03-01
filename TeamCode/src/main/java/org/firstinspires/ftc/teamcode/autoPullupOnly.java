@@ -17,42 +17,37 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-@Autonomous(name = "AutoNoDrive")
+import java.lang.annotation.Target;
+
+@Autonomous(name = "Pullup Only")
 
 public class autoPullupOnly extends JackalopeAutoMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-    //    private CRServo leftnom = null;
-//    private CRServo rightnom = null;
     private Servo flipper = null;
     private boolean read = false;
+    private DcMotor pullupEncoder;
     private ColorSensor CBL;
     private boolean gripped = false;
     private boolean lifted = false;
     private double short_drive_x;
     private boolean modeBool = false;
+    private double power;
+    private int distance;
     private double short_drive_y;
     private ElapsedTime clock = new ElapsedTime();
     private double startTime = 0.0;
     double scale;
     double drive_scale;
-    //    double gamepad1LeftY;
-//    double gamepad1LeftX;
-//    double gamepad1RightX;
-//    boolean rightbumper;
-//    boolean leftbumper;
-//    boolean abutton;
-//    boolean bbutton;
-//    boolean xbutton;
-    boolean ybutton;
+
+    //for encoders:
+//    static final double     TICKS    = 537.6 ;
+    static final int     TICKS    = 1120 ;
+
     double frontLeft;
     double frontRight;
     double backRight;
     double backLeft;
-//    double righttrigger;
-//    double lefttrigger;
-//    boolean gamepad2DpadDown;
-//    boolean gamepad2DpadUp;
 
     @Override
     public void strafe(boolean strafe) {
@@ -65,6 +60,7 @@ public class autoPullupOnly extends JackalopeAutoMode {
         BR.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         BL.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         pullup.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
+        string.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
     }
 
     /*
@@ -79,7 +75,9 @@ public class autoPullupOnly extends JackalopeAutoMode {
         BR = hardwareMap.get(DcMotor.class, "BR");
         BL = hardwareMap.get(DcMotor.class, "BL");
         pullup = hardwareMap.get(DcMotor.class, "pullup");
+        string = hardwareMap.get(DcMotor.class, "string");
         flipper = hardwareMap.get(Servo.class, "flipper");
+//        pullupEncoder = hardwareMap.get(DcMotor.class, "string");
 
         // Set the initial directions of the motors
         FL.setDirection(DcMotor.Direction.REVERSE);
@@ -87,14 +85,32 @@ public class autoPullupOnly extends JackalopeAutoMode {
         BR.setDirection(DcMotor.Direction.REVERSE);
         FR.setDirection(DcMotor.Direction.REVERSE);
         pullup.setDirection(DcMotorSimple.Direction.FORWARD);
-        flipper.setDirection(Servo.Direction.FORWARD);
+        string.setDirection(DcMotor.Direction.REVERSE);
 
         // Set the behaviour when motors' power is set to zero -- whether to brake
         FR.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         FL.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         BR.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
         BL.setZeroPowerBehavior(ZERO_POWER_BEHAVIOR);
-        pullup.setDirection(DcMotorSimple.Direction.FORWARD);
+        pullup.setDirection(DcMotor.Direction.FORWARD);
+        string.setDirection(DcMotor.Direction.FORWARD);
+        flipper.setDirection(Servo.Direction.FORWARD);
+
+//        //encoders modes:
+//        pullup.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        pullup.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        pullup.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//        pullup.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        // Send telemetry message to signify robot waiting;
+        telemetry.addData("Status", "Resetting Encoders");    //
+        telemetry.update();
+
+       // pullup.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+//        pullup.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+      //  pullup.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -106,20 +122,48 @@ public class autoPullupOnly extends JackalopeAutoMode {
         // Wait for the start button to be pressed on the phone.
         waitForStart();
 
-            // Loop until the op mode is stopped. changes
-            telemetry.addData("read", read);
+        telemetry.addData("read", read);
 
-//            delay(25000);
-            pullup.setPower(.7);
-            telemetry.addData("power", pullup.getPower());
+        pullup.setPower(-1);
+        pullup.setTargetPosition(pullup.getCurrentPosition() - 19900);
+
+        while (pullup.getTargetPosition() + 50 < pullup.getCurrentPosition() && opModeIsActive()) {
+            telemetry.addData("current position", pullup.getCurrentPosition());
+            telemetry.addData("target position", pullup.getTargetPosition());
+
             telemetry.update();
-            sleep(9700);
-            pullup.setPower(0);
-            telemetry.addData("power", pullup.getPower());
-            telemetry.update();
-            goLeft();
-            sleep(1500);
-            goStop();
+            sleep(10);
+            idle();
+        }
+
+//        goForward();
+//        sleep(600);
+//        goStop();
+
+//        goBack();
+//        sleep(500);
+//        goStop();
+//        BR.setTargetPosition(BR.getCurrentPosition() - 2000);
+//
+//        FL.setPower(-.4);
+//        BL.setPower(-.4);
+//        FR.setPower(.4);
+//        BR.setPower(.4);
+//
+//        while (BR.getCurrentPosition() + 50 > pullup.getCurrentPosition() && opModeIsActive()) {
+////            goForward();
+//            telemetry.addData("BR position", BR.getTargetPosition());
+//            telemetry.update();
+//            sleep(10);
+//            idle();
+//        }
+
+//
+//            pullup.setPower(0);
+
+//        else {
+//            pullup.setPower(0);
+//        }
 
             // Send the power variables to the driver.
             telemetry.addData("FR", frontRight);
