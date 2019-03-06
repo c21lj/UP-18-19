@@ -87,10 +87,10 @@ abstract class JackalopeAutoMode extends LinearOpMode {
     }
 
     public void goForward(){
-        FL.setPower(.8);
-        BL.setPower(.4);
-        FR.setPower(-.4);
-        BR.setPower(-.8);
+        FL.setPower(.3);
+        BL.setPower(.3);
+        FR.setPower(-.3);
+        BR.setPower(-.3);
 
     }
 

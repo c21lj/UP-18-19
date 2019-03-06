@@ -3,32 +3,20 @@ package org.firstinspires.ftc.teamcode;
 //UP!!
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.hardware.bosch.BNO055IMU;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.robotcore.external.ClassFactory;
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
-import java.util.Iterator;
 import java.util.List;
 
 @Autonomous(name = "NJ Marker")
 
-public class AutoTests extends JackalopeAutoMode {
+public class MarkerAuto extends JackalopeAutoMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
     private ElapsedTime clock = new ElapsedTime();
@@ -114,10 +102,6 @@ public class AutoTests extends JackalopeAutoMode {
 
         pullup.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        // Tell the driver that initialization is complete.
-        telemetry.addData("Status", "Initialized");
-
-
         // Reset the timer to zero.
         runtime.reset();
 
@@ -125,14 +109,18 @@ public class AutoTests extends JackalopeAutoMode {
         vf = new VuforiaInterop(telemetry, hardwareMap);
         vf.init();
 
+        // Tell the driver that initialization is complete.
+        telemetry.addData("Status", "Initialized");
+        telemetry.update();
+
         // Wait for the start button to be pressed on the phone.
         waitForStart();
 
-        flipper.setPosition(.01);
+       flipper.setPosition(.01);
 
-        pullup.setPower(-1);
-//        pullup.setTargetPosition(pullup.getCurrentPosition() - 21500);
-        pullup.setTargetPosition(pullup.getCurrentPosition() - 19500);
+       pullup.setPower(-1);
+       //pullup.setTargetPosition(pullup.getCurrentPosition() - 21500); //competition
+      pullup.setTargetPosition(pullup.getCurrentPosition() - 20100); //our lander
 
         while (pullup.getTargetPosition() + 50 < pullup.getCurrentPosition() && opModeIsActive()) {
             telemetry.addData("current position", pullup.getCurrentPosition());
@@ -142,23 +130,40 @@ public class AutoTests extends JackalopeAutoMode {
             sleep(10);
             idle();
         }
+//
+//        telemetry.update();
+//
 
-        telemetry.update();
-        goForward();
-        sleep(500);
+        int target = (BR.getCurrentPosition() + 250);
+        telemetry.addData("starting current position:", BR.getCurrentPosition());
 
-        goStop();//
-        sleep(1000);//
-
-        goBack();
-        sleep(500);
+        while ((BR.getCurrentPosition() < target ) && opModeIsActive()) {
+            telemetry.addData("current position:", BR.getCurrentPosition());
+            telemetry.update();
+            goForward();
+            idle();
+        }
 
         goStop();
+
+//old way of navigating
+      //  sleep(10);
+      //  goStop();//
+      //  sleep(200);//
+
+//        goBack();
+//        sleep(150);
+
+      //  goStop();
 //        sleep(1000); //
 
 //        goLeft();
 //        sleep(2000);
 //        flipper.setPosition(.90);
+
+        int attempts = 0;
+
+        if (attempts<4) {
 
         // Wait for a few seconds to allow detection to settle
         sleep((long) (INITIAL_DETECTION_DELAY_SECONDS * 1000));
@@ -166,58 +171,54 @@ public class AutoTests extends JackalopeAutoMode {
         MineralLocation mineralLocation = null;
 
         // The number of times detection has been attempted
-        int attempts = 0;
-        telemetry.addData("Detection attempts", attempts);
 
-        telemetry.addData("Detection status", "Detecting");
-        telemetry.update();
+            telemetry.addData("Detection attempts", attempts);
 
-        if (vf.tfod != null) {
-            vf.tfod.activate();
+            telemetry.addData("Detection status", "Detecting");
+            telemetry.update();
 
-            // Try to detect the gold mineral until a conclusion is reached
-            while (opModeIsActive() && mineralLocation == null && attempts <= MAX_DETECTION_ATTEMPTS) {
-                mineralLocation = sample();
-                attempts++;
-                telemetry.addData("Detection attempts:", attempts);
-                telemetry.update();
+            if (vf.tfod != null) {
+                vf.tfod.activate();
 
-                // Wait for some time to allow a result to be reached
-                sleep((long) (INITIAL_DETECTION_DELAY_SECONDS * 1000));
-            }
+                // Try to detect the gold mineral until a conclusion is reached
+                while (opModeIsActive() && mineralLocation == null && attempts <= MAX_DETECTION_ATTEMPTS) {
+                    mineralLocation = sample();
+                    attempts++;
+                    telemetry.addData("Detection attempts:", attempts);
+                    telemetry.update();
 
-            // Drive in different directions depending on the location of the gold mineral
-            if (mineralLocation == MineralLocation.LEFT) {
-                telemetry.addData("Detection status", "Success: Left");
-                telemetry.update();
-                pushLeft();
-            } else if (mineralLocation == MineralLocation.CENTER) {
-                telemetry.addData("Detection status", "Success: Center");
-                telemetry.update();
-                pushCenter();
-            } else if (mineralLocation == MineralLocation.RIGHT) {
-                telemetry.addData("Detection status", "Success: Right");
+                    // Wait for some time to allow a result to be reached
+                    sleep((long) (INITIAL_DETECTION_DELAY_SECONDS * 1000));
+                }
+
+                // Drive in different directions depending on the location of the gold mineral
+                if (mineralLocation == MineralLocation.LEFT) {
+                    telemetry.addData("Detection status", "Success: Left");
+                    telemetry.update();
+                    pushLeft();
+                } else if (mineralLocation == MineralLocation.CENTER) {
+                    telemetry.addData("Detection status", "Success: Center");
+                    telemetry.update();
+                    pushCenter();
+                } else if (mineralLocation == MineralLocation.RIGHT) {
+                    telemetry.addData("Detection status", "Success: Right");
+                    telemetry.update();
+                    pushRight();
+                } else {
+                    // If nothing was detected, default to going left
+                    telemetry.addData("Detection status", "Failure (default Left)");
+                    telemetry.update();
+                    pushLeft();
+                }
+            } else {
+                // If tfod fails to activate, default to going right
+                telemetry.addData("Detection status", "Failure");
                 telemetry.update();
                 pushRight();
-            } else {
-                // If nothing was detected, default to going left
-                telemetry.addData("Detection status", "Failure (default Left)");
-                telemetry.update();
-                pushLeft();
             }
-        } else {
-            // If tfod fails to activate, default to going right
-            telemetry.addData("Detection status", "Failure");
-            telemetry.update();
-            pushRight();
         }
 
-//        goStop();
-        telemetry.update();
-        sleep(100000);
-        telemetry.update();
-//        idle();
-
+       goStop();
     }
 
     /**
